@@ -13,24 +13,20 @@
             v-model="tabs"
             class="mx-0"
           >
-            <v-tab href="#tab-1">
-              <span class="body-2">Pendientes</span>
+            <v-tab v-for="tipo in tipos" :href="`#tab-${tipo.tab}`" :key="tipo.titulo" class="mr-5">
+              <span class="body-2">{{ tipo.titulo }}</span>
               <v-badge
-                v-model="show"
-                color="purple"
+                v-model="tipo.badge"
                 class="ml-2"
+                color="orange darken-4"
               >
                 <template v-slot:badge>
-                  <span>6</span>
+                  <span>{{ tipo.cantidad }}</span>
                 </template>
               </v-badge>
-              
-            </v-tab>
-            <v-tab class="ml-5" href="#tab-2">
-              <span class="body-2 mr-2">Recados</span>
-            </v-tab>
+              </v-tab>
           </v-tabs>
-          <v-divider></v-divider>
+         
 
       <v-tabs-items v-model="tabs">
 
@@ -41,7 +37,7 @@
         </v-tab-item>
 
         <v-tab-item value="tab-2">
-          <v-card flat>
+          <v-card flat class="py-4">
             <v-card-text>Aquí va el componente de recados</v-card-text>
           </v-card>
         </v-tab-item>
@@ -61,7 +57,10 @@ export default {
   data() {
     return{
       tabs: null,
-      show: true // Este boolean se tiene que sustituir por el array que recibe la cantidad de pendientes
+      tipos: [
+        {titulo: 'Pendientes', tab: 1, badge: true, cantidad: 3},
+        {titulo: 'Recados', tab: 2, badge: true, cantidad: 5}
+      ]
     }
   }
 }
