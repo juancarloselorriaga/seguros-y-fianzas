@@ -32,7 +32,7 @@
 
         <v-tab-item value="tab-1">
           <v-card flat class="py-4">
-            <v-card-text>Aquí va el componente de pendientes</v-card-text>
+            <PendientesList></PendientesList>
           </v-card>
         </v-tab-item>
 
@@ -53,7 +53,13 @@
 </template>
 
 <script>
+
+import PendientesList from "@/components/pendientes/PendientesList.vue";
+
 export default {
+  components: {
+    PendientesList
+  },
   data() {
     return{
       tabs: null,
