@@ -72,8 +72,7 @@
     <v-toolbar color="blue-grey" dark app absolute clipped-left>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">
-        S
-        <span class="font-weight-light">YF</span>
+        S<strong class="font-weight-light">YF</strong>
       </span>
       <v-text-field solo-inverted flat hide-details label="Buscar" prepend-inner-icon="search"></v-text-field>
       <v-spacer></v-spacer>
@@ -104,7 +103,7 @@ export default {
       { icon: "archive", text: "Pólizas", link: "/seguros/polizas" },
       { icon: "payment", text: "Pólizas por pagar", link: "/seguros/pagos" },
       {
-        icon: "refresh",
+        icon: "update",
         text: "Pólizas por renovar",
         link: "/seguros/renovaciones"
       },

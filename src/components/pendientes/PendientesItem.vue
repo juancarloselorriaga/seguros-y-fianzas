@@ -2,7 +2,7 @@
   <v-layout row wrap align-center justify-start class="mt-3 pa-3">
     <v-flex xs2 sm4 md1 class="v-input__slot">
       <div class>
-        <v-checkbox v-model="done" color="amber lighten-2" value="checked" hide-details></v-checkbox>
+        <v-checkbox v-if="!done" v-model="done" color="amber lighten-2" :value="checked" hide-details></v-checkbox>
       </div>
     </v-flex>
     <v-flex xs12 md8>

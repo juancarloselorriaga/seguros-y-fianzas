@@ -1,7 +1,7 @@
 <template>
   <div class="pendientes">
-    <v-container fluid fill-height color="white">
-      <v-layout column align-center justify-space-between class="my-1">
+    <v-container fluid fill-height class="py-0" color="white">
+      <v-layout column justify-center class="my-1">
         <v-flex xs6>
           <h1 block class="display-3 font-weight-medium ">Pendientes</h1>
         </v-flex>
@@ -14,7 +14,7 @@
     </v-container>
 
 
-    <v-container fluid fill-height color="white">
+    <v-container fluid fill-height class="py-1" color="white">
 
       <v-layout row class="my-1">
         <v-flex xs12>
@@ -42,7 +42,7 @@
       <v-tabs-items v-model="tabs">
 
         <v-tab-item value="tab-1">
-          <v-card flat class="py-4">
+          <v-card flat class="py-5">
             <PendientesList></PendientesList>
           </v-card>
         </v-tab-item>
@@ -75,7 +75,7 @@ export default {
     return{
       tabs: null,
       tipos: [
-        {titulo: 'Pendientes', tab: 1, badge: true, cantidad: 3},
+        {titulo: 'Notas y pendientes', tab: 1, badge: true, cantidad: 3},
         {titulo: 'Recados', tab: 2, badge: true, cantidad: 5}
       ],
       day: this.todoDay(),
