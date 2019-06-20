@@ -1,6 +1,17 @@
 <template>
   <div class="pendientes">
-    <h1 block class="display-3 font-weight-medium ">Pendientes</h1>
+    <v-container fluid fill-height color="white">
+      <v-layout column align-center justify-space-between class="my-1">
+        <v-flex xs6>
+          <h1 block class="display-3 font-weight-medium ">Pendientes</h1>
+        </v-flex>
+        <v-flex xs6>
+          <v-card height="100%" class="py-0" flat light>
+            <v-subheader class="headline pl-1 mb-0">{{day}} , {{date}} de {{month}}</v-subheader>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
 
 
     <v-container fluid fill-height color="white">
@@ -18,7 +29,7 @@
               <v-badge
                 v-model="tipo.badge"
                 class="ml-2"
-                color="orange darken-4"
+                color="amber lighten-2 blue-grey--text"
               >
                 <template v-slot:badge>
                   <span>{{ tipo.cantidad }}</span>
@@ -66,7 +77,44 @@ export default {
       tipos: [
         {titulo: 'Pendientes', tab: 1, badge: true, cantidad: 3},
         {titulo: 'Recados', tab: 2, badge: true, cantidad: 5}
-      ]
+      ],
+      day: this.todoDay(),
+      month: this.todoMonth(),
+      date: new Date().getDate(),
+      year: new Date().getFullYear(),
+    }
+  },
+  methods: {
+    todoDay() {
+      var d = new Date();
+      var days = [
+        "Domingo",
+        "Lunes",
+        "Martes",
+        "Miércoles",
+        "Jueves",
+        "Viernes",
+        "Sábado"
+      ];
+      return days[d.getDay()];
+    },
+    todoMonth() {
+      var m = new Date();
+      var months = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ];
+      return months[m.getMonth()];
     }
   }
 }

@@ -1,6 +1,35 @@
 <template>
   <div class="navigation">
-    <v-navigation-drawer v-model="drawer" fixed clipped class="white" app>
+    <v-navigation-drawer
+      fixed
+      clipped
+      class="white"
+      app
+      v-model="drawer"
+      :mini-variant="mini"
+      hide-overlay
+      stateless
+    >
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar color="amber lighten-2">
+              <span class="blue-grey--text headline">JC</span>
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>Juan Chávez</v-list-tile-title>
+            </v-list-tile-content>
+
+            <v-list-tile-action>
+              <v-btn icon @click.stop="mini = !mini">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+
       <v-list class="white">
         <template v-for="(item, i) in items">
           <v-layout v-if="item.heading" :key="i" row align-center>
@@ -14,20 +43,33 @@
 
           <v-divider v-else-if="item.divider" :key="i" dark class="my-3"></v-divider>
 
-          <v-list-tile v-else :key="i" class="tile" :to="item.link" exact-active-class="is-active">
-            <v-list-tile-action>
-              <v-icon color="grey darken-3">{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title
-                class="grey--text text--darken-3 subheading font-weight-medium"
-              >{{ item.text }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+          <v-tooltip top :key="item.text">
+            <template v-slot:activator="{ on }">
+              <v-list-tile
+                v-if="!item.divider && !item.heading"
+                :key="i"
+                class="tile"
+                :to="item.link"
+                exact-active-class="is-active"
+                v-on="on"
+              >
+                <v-list-tile-action>
+                  <v-icon color="blue-grey ">{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title
+                    class="grey--text text--darken-3 subheading font-weight-medium"
+                  >{{ item.text }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
+            <span>{{item.text}}</span>
+          </v-tooltip>
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="indigo darken-1" dark app absolute clipped-left>
+
+    <v-toolbar color="blue-grey" dark app absolute clipped-left>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">
         S
@@ -41,9 +83,11 @@
 
 <script>
 export default {
-  name: 'navigation',
+  name: "navigation",
   data: () => ({
-    drawer: null,
+    drawer: true,
+    mini: true,
+    right: null,
     items: [
       { icon: "dashboard", text: "Inicio", link: "/" },
       { heading: "Agenda", edit: false },
@@ -89,18 +133,13 @@ export default {
 }
 
 .tile:hover {
-  background: #9fa8da;
+  background: #FFD54F;
   color: white;
 }
 
-.tile:active {
-  background: #3f51b5;
-}
-
-.is-active{
+.is-active {
   background-color: red;
 }
-
 </style>
 
 
