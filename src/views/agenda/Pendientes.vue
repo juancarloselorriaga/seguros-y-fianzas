@@ -3,7 +3,7 @@
     <v-container fluid fill-height class="py-0" color="white">
       <v-layout column justify-center class="my-1">
         <v-flex xs6>
-          <h1 block class="display-3 font-weight-medium ">Pendientes</h1>
+          <h1 block class="display-2">Pendientes</h1>
         </v-flex>
         <v-flex xs6>
           <v-card height="100%" class="py-0" flat light>

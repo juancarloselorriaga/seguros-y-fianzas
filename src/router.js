@@ -14,47 +14,52 @@ export default new Router({
       component: () => import('./views/Inicio.vue')
     },
     {
-      path: '/agenda/pendientes',
+      path: '/pendientes',
       name: 'pendientes',
       component: () => import('./views/agenda/Pendientes.vue')
     },
     {
-      path: '/agenda/citas',
+      path: '/citas',
       name: 'citas',
       component: () => import('./views/agenda/Citas.vue')
     },
     {
-      path: '/agenda/llamadas',
+      path: '/llamadas',
       name: 'llamadas',
       component: () => import('./views/agenda/Llamadas.vue')
     },
     {
-      path: '/agenda/tramites',
+      path: '/tramites',
       name: 'tramites',
       component: () => import('./views/agenda/Tramites.vue')
     },
     {
-      path: '/configuraciones/configuracion',
+      path: '/configuracion',
       name: 'configuracion',
       component: () => import('./views/configuraciones/Configuracion.vue')
     },
     {
-      path: '/configuraciones/ayuda',
+      path: '/ayuda',
       name: 'ayuda',
       component: () => import('./views/configuraciones/Ayuda.vue')
     },
     {
-      path: '/seguros/pagos',
+      path: '/pagos',
       name: 'pagos',
       component: () => import('./views/seguros/Pagos.vue')
     },
     {
-      path: '/seguros/polizas',
+      path: '/clientes',
+      name: 'clientes',
+      component: () => import('./views/seguros/Clientes/Clientes.vue')
+    },
+    {
+      path: '/polizas',
       name: 'polizas',
       component: () => import('./views/seguros/Polizas.vue')
     },
     {
-      path: '/seguros/renovaciones',
+      path: '/renovaciones',
       name: 'renovaciones',
       component: () => import('./views/seguros/Renovaciones.vue')
     }

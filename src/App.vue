@@ -2,9 +2,9 @@
   <v-app id="app">
     <Navigation></Navigation>
     <v-content>
-      <v-container fluid fill-height class="white">
+      <v-container fluid fill-height class="grey lighten-4">
         <v-layout row>
-          <v-flex xs12>
+          <v-flex xs12 class="dar">
             <transition name="fade" mode="out-in">
             <router-view/>
           </transition>
