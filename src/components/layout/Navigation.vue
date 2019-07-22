@@ -29,42 +29,28 @@
     </v-navigation-drawer>
 
     <v-toolbar color="white blue-grey--text text--darken-3" flat dark app absolute clipped-left>
-      <span class="title mr-5">
-        S
-        <strong class="font-weight-light blue-grey--text text--darken-3">YF</strong>
+      <span class="title mr-5">S<strong class="font-weight-light blue-grey--text text--darken-3">YF</strong>
       </span>
       <v-spacer></v-spacer>
       <v-layout shrink justify-center align-center>
         <v-avatar>
           <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
         </v-avatar>
-        <v-menu :nudge-width="200" transition="slide-y-transition" bottom origin="center center">
-          <template v-slot:activator="{ on }">
-            <v-toolbar-title v-on="on" class="ml-0">
-              <v-icon light>arrow_drop_down</v-icon>
-            </v-toolbar-title>
-          </template>
-
-          <v-list>
-            <v-list-tile v-for="profileOption in profileOptions" :key="profileOption.title">
-              <v-list-tile-title>
-                <v-layout>
-                  <span>{{profileOption.title}}</span>
-                  <v-spacer></v-spacer>
-                  <v-icon>{{profileOption.icon}}</v-icon>
-                </v-layout>
-              </v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+        <Menu :items="profileOptions" icon="arrow_drop_down"/>
       </v-layout>
     </v-toolbar>
   </div>
 </template>
 
 <script>
+
+import Menu from "@/components/utilities/Menu.vue";
+
 export default {
   name: "navigation",
+  components: {
+    Menu
+  },
   data: () => ({
     drawer: true,
     mini: true,

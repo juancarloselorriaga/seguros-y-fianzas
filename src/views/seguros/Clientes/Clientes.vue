@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="pa-0">
       <v-layout column>
-        <v-flex xs12 class="mb-5">
+        <v-flex xs12 class="mb-4">
           <v-layout>
           <v-layout align-center>
             <h1 class="display-2 mr-3">Clientes</h1>
@@ -11,19 +11,19 @@
           </v-layout>
           <v-spacer></v-spacer>
           <v-layout justify-end="">
-            <v-btn dark flat class="red lighten-1">Nuevo cliente</v-btn>
-            <v-btn flat>Exportar</v-btn>
+            <v-btn dark flat class="indigo lighten-1">Nuevo cliente</v-btn>
+            <v-btn outline color="indigo lighten-1">Exportar</v-btn>
           </v-layout>
           </v-layout>
         </v-flex>
 
         <v-flex xs12>
           <v-layout>
-            <v-flex xs8>
-              <ListadoClientes />
+            <v-flex xs7>
+              <ListadoClientes :clientes="clientes" />
             </v-flex>
 
-            <v-flex xs4>
+            <v-flex xs5 class="ml-4">
               <Cliente />
             </v-flex>
           </v-layout>
@@ -38,11 +38,21 @@
 
 import Cliente from "@/components/clientes/Cliente.vue";
 import ListadoClientes from "@/components/clientes/ListadoClientes.vue";
+import {mapActions, mapState} from 'vuex'
 
 export default {
   components: {
     Cliente,
     ListadoClientes
+  },
+  methods: {
+    ...mapActions(['getClients']),
+  },
+  computed: {
+    ...mapState(['clientes']),
+  },
+  created () {
+    this.getClients()
   }
 }
 </script>
@@ -50,7 +60,7 @@ export default {
 <style scoped>
  
 button {
-   border-radius: 8px;
+   border-radius: 16px;
  }
 
 </style>
