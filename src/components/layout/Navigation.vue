@@ -28,9 +28,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="white blue-grey--text text--darken-3" flat dark app absolute clipped-left>
-      <span class="title mr-5">S<strong class="font-weight-light blue-grey--text text--darken-3">YF</strong>
+    <v-toolbar color="white blue-grey--text text--darken-3 pa-0" flat dark app>
+      <v-toolbar-title>
+        <span class="title mr-5">S<strong class="font-weight-light blue-grey--text text--darken-3">YF</strong>
       </span>
+      </v-toolbar-title>
+      
       <v-spacer></v-spacer>
       <v-layout shrink justify-center align-center>
         <v-avatar>

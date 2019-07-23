@@ -10,7 +10,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setClients(state, clients){
-      state.clients = clients;
+      state.clientes = clients;
     }
   },
   actions: {
@@ -20,7 +20,7 @@ export default new Vuex.Store({
 
       axios.get(url)
         .then((res) => {
-          clients = res.data;
+          clients = res.data.data;
           commit('setClients', clients)
         })
         .catch((err) => {

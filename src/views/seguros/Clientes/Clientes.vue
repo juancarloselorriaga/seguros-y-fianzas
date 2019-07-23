@@ -6,12 +6,12 @@
           <v-layout align-center>
             <h1 class="display-2 mr-3">Clientes</h1>
             <v-avatar color="amber lighten-2">
-              <span class="blue-grey--text headline">3</span>
+              <span class="blue-grey--text headline">{{clientes.length}}</span>
             </v-avatar>
           </v-layout>
           <v-spacer></v-spacer>
           <v-layout justify-end="">
-            <v-btn dark flat class="indigo lighten-1">Nuevo cliente</v-btn>
+            <ModalNuevoCliente />
             <v-btn outline color="indigo lighten-1">Exportar</v-btn>
           </v-layout>
           </v-layout>
@@ -19,12 +19,12 @@
 
         <v-flex xs12>
           <v-layout>
-            <v-flex xs7>
-              <ListadoClientes :clientes="clientes" />
+            <v-flex xs12 shrink>
+              <ListadoClientes :clientes="clientes" @selectRow="selectRow"/>
             </v-flex>
 
-            <v-flex xs5 class="ml-4">
-              <Cliente />
+            <v-flex v-if="selectedClient" xs5 class="ml-4" grow>
+              <Cliente :items="selectedClient" />
             </v-flex>
           </v-layout>
         </v-flex>
@@ -38,15 +38,25 @@
 
 import Cliente from "@/components/clientes/Cliente.vue";
 import ListadoClientes from "@/components/clientes/ListadoClientes.vue";
+import ModalNuevoCliente from "@/components/clientes/ModalNuevoCliente.vue";
 import {mapActions, mapState} from 'vuex'
 
 export default {
   components: {
     Cliente,
-    ListadoClientes
+    ListadoClientes,
+    ModalNuevoCliente
+  },
+  data () {
+    return {
+      selectedClient: null
+    }
   },
   methods: {
     ...mapActions(['getClients']),
+    selectRow(row) {
+      this.selectedClient = row
+    }
   },
   computed: {
     ...mapState(['clientes']),

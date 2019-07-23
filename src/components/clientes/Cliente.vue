@@ -2,17 +2,12 @@
   <v-card class="pt-2 pb-2 radius-3">
     <v-layout column class="white">
       <v-card-title>
-        <span class="headline blue-grey--text text--darken-4 my-1">Juan Carlos Chávez Elorriaga</span>
+        <span class="headline blue-grey--text text--darken-4 my-1">{{items.personalInfo.name}}</span>
         <v-spacer></v-spacer>
         <Menu :items="clientOptions" icon="more_vert" />
       </v-card-title>
 
-      <v-layout justify-start px-2>
-        <v-btn dark flat class="radius-2 mb-5 indigo lighten-1">
-          Nueva póliza
-          <v-icon right>create_new_folder</v-icon>
-        </v-btn>
-      </v-layout>
+      <v-divider class="mb-3"></v-divider>
 
       <v-layout column>
         <v-layout justify-center class="mt-0">
@@ -23,21 +18,21 @@
             <v-layout my-5>
               <v-flex xs4>
                 <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">4</span>
+                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
                   <span class="body-1 text-xs-center">Vigentes</span>
                 </v-layout>
               </v-flex>
 
               <v-flex xs4>
                 <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">1</span>
+                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
                   <span class="body-1 text-xs-center">En periodo de renovación</span>
                 </v-layout>
               </v-flex>
 
               <v-flex xs4>
                 <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">4</span>
+                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
                   <span class="body-1 text-xs-center">Vencidas</span>
                 </v-layout>
               </v-flex>
@@ -50,18 +45,7 @@
         <v-layout justify-center class="mt-0">
           <v-flex xs11>
             <h2 class="title font-weight-regular mb-4 blue-grey--text text--darken-2">Información</h2>
-            <InfoCliente :items="items" />
-          </v-flex>
-        </v-layout>
-
-        <v-divider class="my-3"></v-divider>
-
-        <v-layout justify-center class="mt-0">
-          <v-flex xs11>
-            <h2
-              class="title font-weight-regular mb-4 blue-grey--text text--darken-2"
-            >Información médica</h2>
-            <InfoCliente :items="items" />
+            <InfoCliente :personal="items.personalInfo" :professional="items.professionalInfo" :legal="items.legalInfo" :additional="items.additionalInfo" :medical="items.medicalInfo" :diseases="items.medicalInfo.diseases"/>
           </v-flex>
         </v-layout>
 
@@ -87,15 +71,18 @@ import Menu from "@/components/utilities/Menu.vue";
 
 export default {
   name: "Clientes",
+  props: {
+    items: Object
+  },
   components: {
     InfoCliente,
     PolizasRelacionadas,
-    Menu
+    Menu,
   },
   data() {
     return {
-      items: [1, 2, 3, 4, 5],
       clientOptions: [
+        { title: "Nueva póliza", icon: "create_new_folder" },
         { title: "Editar cliente", icon: "edit" },
         { title: "Eliminar cliente", icon: "delete" }
       ]

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height class="pa-0">
     <v-layout justify-center>
-      <v-card align-self-start class="pt-2 pb-5">
+      <v-card align-self-start class="pt-2 pb-5" >
         <v-layout column class="white">
           <v-layout justify-center class="mt-4 mb-2">
             <v-flex xs8>
@@ -26,8 +26,9 @@
             :pagination.sync="pagination"
           >
             <template v-slot:items="props">
-              <td class="text-xs-left blue-grey--text text--darken-4 text-capitalize subheading">
-                <v-layout justify-start>{{ props.item.name }}</v-layout>
+              <tr @click="selectRow(props.item)">
+              <td class="text-xs-left blue-grey--text text--darken-4 text-capitalize subheading" v-if="props.item.personalInfo.name"> 
+                <v-layout justify-start>{{ props.item.personalInfo.name }}</v-layout>
               </td>
               <td class="text-xs-center blue-grey--text text--darken-4 text-capitalize">
                 <v-layout justify-center v-if="props.item.vigentes > 0">
@@ -46,6 +47,7 @@
               <td class="justify-center layout px-0 pa-5">
                 <v-icon color="indigo lighten-2">chevron_right</v-icon>
               </td>
+              </tr>
             </template>
             <template v-slot:no-results>
               <v-alert
@@ -77,11 +79,18 @@ export default {
         descending: true
       },
       headers: [
-        { text: "Nombre", align: "left", value: "name" },
+        { text: "Nombre", align: "left", value: "personalInfo.name" },
         { text: "Pólizas vigentes", align: "center", value: "vigentes" },
         { text: "", align: "center", value: "icon" }
       ]
-    };
+    }
+  },
+  methods: {
+    selectRow (row) {
+      this.$emit('selectRow', row)
+    }
+  },
+  mounted() {
   }
 };
 </script>
