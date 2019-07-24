@@ -1,9 +1,17 @@
 <template>
-  <v-card flat class="mb-3">
-    <v-layout align-center justify-space-between class="pr-3 mb-3">
+<div>
+  
+<v-layout align-center justify-space-between class="pr-3 mb-3">
     <h2 class="title font-weight-regular blue-grey--text text--darken-2">Información</h2>
-    <v-btn small fab flat dark color="indigo lighten-1" class="elevation-0"><v-icon dark>edit</v-icon></v-btn>
   </v-layout>
+  <v-card  class="radius-3 my-4">
+
+    <v-card-title>
+      <h2 class="subheading font-weight-bold blue-grey--text text--darken-2">Datos generales</h2>
+      <v-spacer></v-spacer>
+      <v-btn small fab flat dark color="blue-grey" class="elevation-0"><v-icon dark>edit</v-icon></v-btn>
+    </v-card-title>
+    
     <v-card-text>
       <v-layout wrap>
 
@@ -74,7 +82,7 @@
         <v-flex xs6 class="mb-3">
           <v-layout column>
             <span class="subheading blue-grey--text text--lighten-1 my-1">Enfermedades</span>
-            <span class="body-1 blue-grey--text text--darken-4" v-if="medical !== undefined && medical.diseases.length === 0">sin enfermedades registradas</span>
+            <span class="body-1 blue-grey--text text--darken-4" v-if="medical !== undefined && medical.diseases.length === 0">sin registro</span>
             <ul v-else>
               <li v-for="(disease, index) in diseases" :key="index">{{disease}}</li>
             </ul>
@@ -102,6 +110,7 @@
       </v-layout>
     </v-card-text>
   </v-card>
+</div>
 </template>
 
 <script>
@@ -127,3 +136,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.radius-3 {
+  border-radius: 30px;
+}
+</style>

@@ -1,11 +1,12 @@
 <template>
-<div v-if="contactInfo.length !== 0 && typeof contactInfo === 'array'" class="mb-3">
+<div v-if="contactInfo.length !== 0 && typeof contactInfo !== 'null'" class="mb-3">
   <v-layout align-center justify-space-between class="pr-3 mb-3">
     <h2 class="title font-weight-regular blue-grey--text text--darken-2">Tarjetas de contacto</h2>
     <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
   </v-layout>
   
-  <v-card flat v-for="(contact, index) in contactInfo" :key="index">
+  <div flat v-for="(contact, index) in contactInfo" :key="index">
+<v-card v-if="contact.contactId !== null" class="radius-3 my-4">
     <v-card-title>
       <h2 class="subheading font-weight-bold blue-grey--text text--darken-2">{{ contact.contactId.title }}</h2>
       <v-spacer></v-spacer>
@@ -75,6 +76,8 @@
       </v-layout>
     </v-card-text>
   </v-card>
+  </div>
+  
 </div>
 <div v-else class="mb-3">
   <v-layout align-center justify-space-between class="pr-3">
@@ -100,3 +103,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.radius-3 {
+  border-radius: 30px;
+}
+</style>
+
