@@ -5,14 +5,10 @@
     </template>
 
     <v-card class="pa-3">
-      <v-card-title>
-        <h2 class="blue-grey--text text--darken-4 text-uppercase">Crear nuevo cliente</h2>
-      </v-card-title>
-
       <v-card-text class="my-0">
         <v-layout>
         <v-flex xs12>
-           <CreacionCliente />
+           <CreacionCliente @reRenderDataTable="reRender" @cerrarModal="dialog = false"/>
         </v-flex>
         </v-layout>
       </v-card-text>
@@ -37,6 +33,11 @@ export default {
   data () {
     return {
       dialog: false
+    }
+  },
+  methods: {
+    reRender() {
+      this.$emit('reRenderDataTable');
     }
   }
 }

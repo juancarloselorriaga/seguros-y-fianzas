@@ -12,7 +12,7 @@
           <v-layout>
             <span>{{item.title}}</span>
             <v-spacer></v-spacer>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon small color="blue-grey">{{item.icon}}</v-icon>
           </v-layout>
         </v-list-tile-title>
       </v-list-tile>

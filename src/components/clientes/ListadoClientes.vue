@@ -24,6 +24,7 @@
             no-data-text="No hay datos disponibles"
             :rows-per-page-items="pagination.rowsPerPageItems"
             :pagination.sync="pagination"
+            :key="reRender"
           >
             <template v-slot:items="props">
               <tr @click="selectRow(props.item)">
@@ -39,7 +40,7 @@
                   </v-avatar>
                 </v-layout>
                 <v-layout justify-center v-else>
-                  <v-avatar size="32" color="red lighten-3">
+                  <v-avatar size="32" color="white">
                     <span class="blue-grey--text text--darken-3 title font-weight-bold"></span>
                   </v-avatar>
                 </v-layout>
@@ -68,7 +69,8 @@
 export default {
   name: "ListadoClientes",
   props: {
-    clientes: Array
+    clientes: Array,
+    reRender: Number
   },
   data() {
     return {

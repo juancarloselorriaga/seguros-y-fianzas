@@ -10,33 +10,13 @@
       <v-divider class="mb-3"></v-divider>
 
       <v-layout column>
-        <v-layout justify-center class="mt-0">
+        <TarjetaDashboard :items="items" />
+
+        <v-divider class="my-3"></v-divider>
+
+        <v-layout justify-center class="mt-4">
           <v-flex xs11>
-            <h2
-              class="title font-weight-regular mb-4 blue-grey--text text--darken-2"
-            >Resumen general pólizas</h2>
-            <v-layout my-5>
-              <v-flex xs4>
-                <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
-                  <span class="body-1 text-xs-center">Vigentes</span>
-                </v-layout>
-              </v-flex>
-
-              <v-flex xs4>
-                <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
-                  <span class="body-1 text-xs-center">En periodo de renovación</span>
-                </v-layout>
-              </v-flex>
-
-              <v-flex xs4>
-                <v-layout column justify-center>
-                  <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
-                  <span class="body-1 text-xs-center">Vencidas</span>
-                </v-layout>
-              </v-flex>
-            </v-layout>
+            <TarjetaInfoContacto :contactInfo="items.contactInfo"/>
           </v-flex>
         </v-layout>
 
@@ -44,8 +24,14 @@
 
         <v-layout justify-center class="mt-0">
           <v-flex xs11>
-            <h2 class="title font-weight-regular mb-4 blue-grey--text text--darken-2">Información</h2>
-            <InfoCliente :personal="items.personalInfo" :professional="items.professionalInfo" :legal="items.legalInfo" :additional="items.additionalInfo" :medical="items.medicalInfo" :diseases="items.medicalInfo.diseases"/>
+            <TarjetaInfoCliente
+              :personal="items.personalInfo"
+              :professional="items.professionalInfo"
+              :legal="items.legalInfo"
+              :additional="items.additionalInfo"
+              :medical="items.medicalInfo"
+              :diseases="items.medicalInfo.diseases"
+            />
           </v-flex>
         </v-layout>
 
@@ -53,20 +39,21 @@
 
         <v-layout justify-center class="mt-4">
           <v-flex xs11>
-            <h2
-              class="title font-weight-regular mb-4 blue-grey--text text--darken-2"
-            >Pólizas relacionadas</h2>
-            <PolizasRelacionadas />
+            <TarjetaPolizasRelacionadas :polizasRelacionadas="items.policies" />
           </v-flex>
         </v-layout>
+
+
       </v-layout>
     </v-layout>
   </v-card>
 </template>
 
 <script>
-import InfoCliente from "@/components/clientes/InfoCliente.vue";
-import PolizasRelacionadas from "@/components/clientes/PolizasRelacionadas.vue";
+import TarjetaInfoContacto from "@/components/clientes/TarjetaInfoContacto.vue";
+import TarjetaInfoCliente from "@/components/clientes/TarjetaInfoCliente.vue";
+import TarjetaDashboard from "@/components/clientes/TarjetaDashboard.vue";
+import TarjetaPolizasRelacionadas from "@/components/clientes/TarjetaPolizasRelacionadas.vue";
 import Menu from "@/components/utilities/Menu.vue";
 
 export default {
@@ -75,15 +62,15 @@ export default {
     items: Object
   },
   components: {
-    InfoCliente,
-    PolizasRelacionadas,
+    TarjetaInfoContacto,
+    TarjetaInfoCliente,
+    TarjetaPolizasRelacionadas,
     Menu,
+    TarjetaDashboard
   },
   data() {
     return {
       clientOptions: [
-        { title: "Nueva póliza", icon: "create_new_folder" },
-        { title: "Editar cliente", icon: "edit" },
         { title: "Eliminar cliente", icon: "delete" }
       ]
     };
