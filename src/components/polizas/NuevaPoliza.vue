@@ -9,7 +9,7 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Nueva póliza {{idClienteNuevo}}</v-toolbar-title>
+          <v-toolbar-title>Nueva póliza</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat large @click="savePolicy" :disabled="!isComplete">Guardar y terminar</v-btn>

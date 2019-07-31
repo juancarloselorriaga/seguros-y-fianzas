@@ -18,7 +18,7 @@
         <v-flex xs6 class="mb-3">
           <v-layout column>
             <span class="subheading blue-grey--text text--lighten-1 my-1">Fecha de nacimiento</span>
-            <span class="body-1 blue-grey--text text--darken-4" v-if="personal.birthdate !== undefined">{{ moment(personal.birthdate).format('ll')}}</span>
+            <span class="body-1 blue-grey--text text--darken-4" v-if="personal.birthdate !== undefined">{{ moment(new Date(personal.birthdate).toISOString().substr(0, 10)).format('ll') }}</span>
             <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
           </v-layout>
         </v-flex>
