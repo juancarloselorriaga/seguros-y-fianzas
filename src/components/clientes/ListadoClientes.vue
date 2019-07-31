@@ -32,16 +32,16 @@
                 <v-layout justify-start>{{ props.item.personalInfo.name }}</v-layout>
               </td>
               <td class="text-xs-center blue-grey--text text--darken-4 text-capitalize">
-                <v-layout justify-center v-if="props.item.vigentes > 0">
+                <v-layout justify-center v-if="props.item.vigentes < 0">
                   <v-avatar size="32" color="green lighten-3">
                     <span
                       class="blue-grey--text text--darken-3 title font-weight-bold"
-                    >{{ props.item.vigentes }}</span>
+                    >1</span>
                   </v-avatar>
                 </v-layout>
                 <v-layout justify-center v-else>
-                  <v-avatar size="32" color="white">
-                    <span class="blue-grey--text text--darken-3 title font-weight-bold"></span>
+                  <v-avatar size="32" color="green">
+                    <span class="white--text text--darken-3 title font-weight-bold">{{props.item.policies.length}}</span>
                   </v-avatar>
                 </v-layout>
               </td>
@@ -82,7 +82,7 @@ export default {
       },
       headers: [
         { text: "Nombre", align: "left", value: "personalInfo.name" },
-        { text: "Pólizas vigentes", align: "center", value: "vigentes" },
+        { text: "Pólizas", align: "center", value: "vigentes" },
         { text: "", align: "center", value: "icon" }
       ]
     }
@@ -91,6 +91,8 @@ export default {
     selectRow (row) {
       this.$emit('selectRow', row)
     }
+  },
+  computed: {
   },
   mounted() {
   }

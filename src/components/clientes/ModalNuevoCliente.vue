@@ -8,7 +8,7 @@
       <v-card-text class="my-0">
         <v-layout>
         <v-flex xs12>
-           <CreacionCliente @reRenderDataTable="reRender" @cerrarModal="dialog = false"/>
+           <CreacionCliente @reRenderDataTable="reRender" @cerrarModal="dialog = false" @terminar="terminar"/>
         </v-flex>
         </v-layout>
       </v-card-text>
@@ -38,6 +38,10 @@ export default {
   methods: {
     reRender() {
       this.$emit('reRenderDataTable');
+    },
+    terminar () {
+      this.$emit('terminar');
+      this.dialog = false
     }
   }
 }

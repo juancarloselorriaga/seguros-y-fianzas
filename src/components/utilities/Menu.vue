@@ -7,7 +7,7 @@
     </template>
 
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.title">
+      <v-list-tile v-for="(item, index) in items" :key="item.title" @click="callBackendFor(index)">
         <v-list-tile-title>
           <v-layout>
             <span>{{item.title}}</span>
@@ -21,14 +21,32 @@
 </template>
 
 <script>
+
 export default {
-  name: 'Menu',
+  name: "Menu",
   props: {
     items: Array,
     icon: String
-  }
-}
+  },
+  methods: {
+    callBackendFor(index) {
+      this.$emit('menuItemClicked', index)
+    }
+    }
+  };
 </script>
+
+<style scoped>
+.radius-3 {
+  border-radius: 30px;
+}
+
+.radius-2 {
+  border-radius: 16px;
+}
+
+</style>
+
 
 
 

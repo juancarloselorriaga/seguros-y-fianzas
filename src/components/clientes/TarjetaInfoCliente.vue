@@ -9,7 +9,7 @@
     <v-card-title>
       <h2 class="subheading font-weight-bold blue-grey--text text--darken-2">Datos generales</h2>
       <v-spacer></v-spacer>
-      <v-btn small fab flat dark color="blue-grey" class="elevation-0"><v-icon dark>edit</v-icon></v-btn>
+      <ModalEdicionInfoCliente :clientId="clientId" @reRenderDataTable="reRender"/>
     </v-card-title>
     
     <v-card-text>
@@ -115,11 +115,16 @@
 
 <script>
 
+import ModalEdicionInfoCliente from "@/components/clientes/ModalEdicionInfoCliente.vue";
+
 var moment = require("moment");
 moment.locale("es");
 
 export default {
   name: "TarjetaInfoCliente",
+  components: {
+    ModalEdicionInfoCliente
+  },
   props: {
     personal: Object,
     professional: Object,
@@ -127,12 +132,18 @@ export default {
     legal: Object,
     additional: Object,
     diseases: Array,
-    contactInfo: Object
+    contactInfo: Object,
+    clientId: String
   },
   data() {
     return {
-      moment: moment
+      moment: moment,
     }
+  },
+  methods: {
+    reRender() {
+      this.$emit('reRenderDataTable');
+    },
   }
 };
 </script>

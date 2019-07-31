@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="pa-0">
+    <v-container fluid class="pa-0" >
       <v-layout column>
         <v-flex xs12 class="mb-4">
           <v-layout>
@@ -11,7 +11,7 @@
           </v-layout>
           <v-spacer></v-spacer>
           <v-layout justify-end="">
-            <ModalNuevoCliente @reRenderDataTable="reRender" />
+            <ModalNuevoCliente @reRenderDataTable="reRender" @terminar="terminar" />
             <v-btn outline color="indigo lighten-1" @click="reRender">Exportar</v-btn>
           </v-layout>
           </v-layout>
@@ -26,8 +26,8 @@
             </transition>
             
             <transition name="fade" mode="out-in">
-              <v-flex v-if="selectedClient" xs5 class="ml-4" grow>
-                <Cliente :items="selectedClient" />
+              <v-flex v-if="selectedClient" xs5 class="ml-4" grow >
+                <Cliente :items="selectedClient" @reRenderDataTable="reRender" @reRenderCard="reRenderCard" :key="cardKey"/>
               </v-flex>
             </transition>  
             
@@ -45,6 +45,7 @@ import Cliente from "@/components/clientes/Cliente.vue";
 import ListadoClientes from "@/components/clientes/ListadoClientes.vue";
 import ModalNuevoCliente from "@/components/clientes/ModalNuevoCliente.vue";
 import {mapActions, mapState} from 'vuex'
+import { setTimeout } from 'timers';
 
 export default {
   components: {
@@ -55,7 +56,8 @@ export default {
   data () {
     return {
       selectedClient: null,
-      listKey: 100
+      listKey: 100,
+      cardKey: 200,
     }
   },
   methods: {
@@ -63,12 +65,24 @@ export default {
     reRender() {
       this.selectedClient = null
       setTimeout(() => {
+        console.log('RE RENDERING')
         this.getClients()
       return this.listKey += 1;
       }, 300);
     },
+    reRenderCard() {
+      let row = this.selectedClient
+      this.selectedClient = null 
+      this.getClients().then(res => {
+        console.log('RE RENDERING CARD')
+        return this.cardKey += 1
+      })
+    },
     selectRow(row) {
       this.selectedClient = row
+    },
+    terminar () {
+      this.selectedClient = null
     }
   },
   computed: {

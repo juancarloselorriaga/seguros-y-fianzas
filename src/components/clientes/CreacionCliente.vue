@@ -14,7 +14,7 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <CreacionClientePaso1 @reRenderDataTable="reRender" @nextStep="nextStep" @clienteCreado="asignarIdClienteNuevo" />
+        <CreacionClientePaso1 @reRenderDataTable="reRender" @nextStep="nextStep" @clienteCreado="asignarIdClienteNuevo" @closeModal="closeModal" />
       </v-stepper-content>
 
       <v-stepper-content step="2">
@@ -22,7 +22,7 @@
       </v-stepper-content>
 
       <v-stepper-content step="3">
-          <CreacionClientePaso3 @reRenderDataTable="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo" @cerrarModal="cerrarModal"/>
+          <CreacionClientePaso3 @reRenderDataTable="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo" @terminar="terminar"/>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -48,8 +48,11 @@ export default {
     };
   },
   methods: {
-    cerrarModal () {
+    closeModal () {
       this.$emit('cerrarModal')
+    },
+    terminar () {
+      this.$emit('terminar')
     },
     asignarIdClienteNuevo (idCliente) {
       this.idClienteNuevo = idCliente;

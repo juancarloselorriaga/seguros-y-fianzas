@@ -127,7 +127,7 @@
         @click="saveClientPersonalInfo"
         class="mt-5"
       >Guardar y continuar</v-btn>
-      <v-btn flat class="mt-5">Cancelar</v-btn>
+      <v-btn flat class="mt-5" @click="cerrar">Cancelar</v-btn>
     </v-layout>
   </div>
 </template>
@@ -172,6 +172,9 @@ export default {
     };
   },
   methods: {
+     cerrar () {
+      this.$emit('closeModal')
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;

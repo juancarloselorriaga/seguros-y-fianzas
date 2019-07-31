@@ -46,7 +46,7 @@ export default {
       }
     },
     terminar () {
-      this.$emit("cerrarModal");
+      this.$emit("terminar");
     },
   }
 };

@@ -1,12 +1,17 @@
 <template>
-<div v-if="contactInfo.length !== 0 && typeof contactInfo !== 'null'" class="mb-3">
+<div v-if="contactInfo.length !== 0 && typeof contactInfo !== 'null'" class="mb-3" >
   <v-layout align-center justify-space-between class="pr-3 mb-3">
+    <v-flex xs-10>
+
     <h2 class="title font-weight-regular blue-grey--text text--darken-2">Tarjetas de contacto</h2>
-    <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
+    </v-flex>
+    <v-flex xs2 class="text-xs-right">
+    <ModalNuevoContacto :items="items" @reRenderCard="reRender"/>
+    </v-flex>
   </v-layout>
   
   <div flat v-for="(contact, index) in contactInfo" :key="index">
-<v-card v-if="contact.contactId !== null" class="radius-3 my-4">
+<v-card v-if="contact.contactId !== null" class="radius-3 my-4" :key="reRenderKey">
     <v-card-title>
       <h2 class="subheading font-weight-bold blue-grey--text text--darken-2">{{ contact.contactId.title }}</h2>
       <v-spacer></v-spacer>
@@ -80,25 +85,39 @@
   
 </div>
 <div v-else class="mb-3">
-  <v-layout align-center justify-space-between class="pr-3">
+  <v-layout align-center justify-space-between class="pr-3 mb-3">
+    <v-flex xs-10>
+
     <h2 class="title font-weight-regular blue-grey--text text--darken-2">Sin información de contacto</h2>
-    <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
+    </v-flex>
+    <v-flex xs2 class="text-xs-right">
+    <ModalNuevoContacto :items="items" @reRenderCard="reRender" />
+    </v-flex>
   </v-layout>
 </div>
 </template>
 
 <script>
 
+import ModalNuevoContacto from "@/components/clientes/ModalNuevoContacto.vue";
 
 export default {
   name: "TarjetaInfoCliente",
   components: {
+    ModalNuevoContacto
   },
   props: {
-    contactInfo: Array
+    contactInfo: Array,
+    items: Object,
+    reRenderKey: Number
   },
   data() {
     return {
+    }
+  },
+  methods: {
+    reRender() {
+      this.$emit("reRenderCard");
     }
   }
 };

@@ -14,7 +14,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getClients({ commit }){
+    async getClients({ commit }){
       let clients = []
       const url = 'http://localhost:3000/clients';
 
