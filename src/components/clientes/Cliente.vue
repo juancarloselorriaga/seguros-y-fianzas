@@ -27,12 +27,6 @@
             <v-layout justify-center class="mt-0">
               <v-flex xs11>
                 <TarjetaInfoCliente
-                  :personal="items.personalInfo"
-                  :professional="items.professionalInfo"
-                  :legal="items.legalInfo"
-                  :additional="items.additionalInfo"
-                  :medical="items.medicalInfo"
-                  :diseases="items.medicalInfo.diseases"
                   :clientId="items._id"
                   @reRenderCard="reRenderCard"
                 />

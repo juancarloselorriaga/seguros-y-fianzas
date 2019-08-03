@@ -17,9 +17,29 @@
             class="subheading font-weight-bold blue-grey--text text--darken-2"
           >{{ contact.contactId.title }}</h2>
           <v-spacer></v-spacer>
-          <v-btn small fab flat dark color="blue-grey" class="elevation-0">
-            <v-icon dark>edit</v-icon>
-          </v-btn>
+                  <v-btn
+                  small
+                  fab
+                  ligth
+                  flat
+                  color="indigo lighten-1"
+                  class="elevation-0"
+                  @click="singleCardEdit(contact.contactId._id)"
+                  v-if="editMode === false"
+                >
+                  <v-icon small dark>edit</v-icon>
+                </v-btn>
+                <v-btn
+                  small
+                  fab
+                  dark
+                  color="green lighten-1"
+                  class="elevation-0"
+                  v-if="editMode === true"
+                  @click="close"
+                >
+                  <v-icon small dark>check</v-icon>
+                </v-btn>
           <v-btn
             small
             fab
@@ -138,9 +158,17 @@ export default {
   },
   data() {
     return {
+      editMode: false,
     }
   },
   methods: {
+    singleCardEdit (cardId) {
+     this.editMode = true
+    },
+    close () {
+      this.editMode = false;
+      // this.saveContactCard()
+    },
     async deleteCard(cardId) {
        if (await this.$refs.confirm.open('Borrar tarjeta de contacto', '¿Estás seguro de querer borrar ésta tarjeta de contacto? Esta acción es irreversible', { color: 'red' })) {
       axios

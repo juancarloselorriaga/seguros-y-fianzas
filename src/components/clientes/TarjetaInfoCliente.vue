@@ -37,8 +37,7 @@
                 <v-btn
                   small
                   fab
-                  ligth
-                  flat
+                  dark
                   color="green lighten-1"
                   class="elevation-0"
                   v-if="generalInfoEditMode === true"
@@ -51,7 +50,7 @@
       <v-card-text>
         
         <v-layout column>
-          <v-layout wrap >
+          <v-layout wrap :key="updateGeneral">
           <v-flex xs6 class="mb-3">
             <v-layout v-if="generalInfoEditMode">
               <v-menu
@@ -87,8 +86,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Fecha de nacimiento</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
-                v-if="personal.birthdate !== undefined"
-              >{{ moment(new Date(personal.birthdate).toISOString().substr(0, 10)).format('ll') }}</span>
+                v-if="general.personalInfo !== undefined"
+              >{{ moment(new Date(general.personalInfo.birthdate).toISOString().substr(0, 10)).format('ll') }}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -108,8 +107,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Estado civil</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-lowercase"
-                v-if="personal.maritalStatus !== undefined"
-              >{{personal.maritalStatus}}</span>
+                v-if="general.personalInfo !== undefined"
+              >{{general.personalInfo.maritalStatus}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -129,8 +128,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Género</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-lowercase"
-                v-if="personal.gender !== undefined"
-              >{{personal.gender}}</span>
+                v-if="general.personalInfo !== undefined"
+              >{{general.personalInfo.gender}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -152,8 +151,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Compañia</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-capitalize"
-                v-if="professional !== undefined"
-              >{{professional.company}}</span>
+                v-if="general.professionalInfo !== undefined"
+              >{{general.professionalInfo.company}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -175,8 +174,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Ocupación</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-capitalize"
-                v-if="professional !== undefined"
-              >{{professional.occupation}}</span>
+                v-if="general.professionalInfo !== undefined"
+              >{{general.professionalInfo.occupation}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -198,8 +197,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">RFC</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-uppercase"
-                v-if="legal !== undefined"
-              >{{legal.rfc}}</span>
+                v-if="general.legalInfo !== undefined"
+              >{{general.legalInfo.rfc}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -221,8 +220,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">CURP</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-uppercase"
-                v-if="legal !== undefined"
-              >{{legal.curp}}</span>
+                v-if="general.legalInfo !== undefined"
+              >{{general.legalInfo.curp}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -244,8 +243,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Referencia</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
-                v-if="additional !== undefined"
-              >{{additional.reference}}</span>
+                v-if="general.additionalInfo !== undefined"
+              >{{general.additionalInfo.reference}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
           </v-flex>
@@ -267,8 +266,8 @@
               <span class="subheading blue-grey--text text--lighten-1 my-1">Comentarios</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
-                v-if="additional !== undefined"
-              >{{additional.comments}}</span>
+                v-if="general.additionalInfo !== undefined"
+              >{{general.additionalInfo.comments}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin comentarios</span>
             </v-layout>
           </v-flex>
@@ -382,7 +381,6 @@
 </template>
 
 <script>
-import ModalEdicionInfoCliente from "@/components/clientes/ModalEdicionInfoCliente.vue";
 import axios from "axios";
 
 var moment = require("moment");
@@ -390,15 +388,7 @@ moment.locale("es");
 
 export default {
   name: "TarjetaInfoCliente",
-  components: {
-    ModalEdicionInfoCliente
-  },
   props: {
-    personal: Object,
-    professional: Object,
-    legal: Object,
-    additional: Object,
-    contactInfo: Object,
     clientId: String
   },
   data() {
@@ -458,7 +448,7 @@ export default {
         })
         .then(res => {
           this.generalInfoEditMode = false;
-          this.reRender();
+          // this.reRender();
         })
         .catch(err => {
           alert(
@@ -494,7 +484,7 @@ export default {
         });
     },
     getGeneral(clientId) {
-      const url = "http://localhost:3000/clients/" + clientId;
+      const url = "http://localhost:3000/clients/" + this.clientId;
       axios
         .get(url)
         .then(res => {
@@ -510,6 +500,11 @@ export default {
       this.generalInfoEditMode = false;
       return this.getMedical(this.clientId)
     },
+    updateGeneral () {
+      this.generalInfoEditMode = false;
+      return this.getGeneral(this.clientId)
+    },
+    
   },
   mounted() {
     this.getMedical(this.clientId);
