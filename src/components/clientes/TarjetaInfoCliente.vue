@@ -111,6 +111,7 @@
             </v-layout>
           </v-flex>
 
+          <v-layout column v-if="this.medical.diseases" :key="updateInfo"> 
           <h2 class="subheading font-weight-bold blue-grey--text text--darken-2 my-4">Datos médicos</h2>
 
           <v-flex xs12 class="mb-3">
@@ -129,6 +130,7 @@
                   <v-icon small dark>compare_arrows</v-icon>
                 </v-btn>
               </v-layout>
+              
               <span
                 class="body-1 blue-grey--text text--darken-4"
                 v-if="medical !== undefined && medical.isSmoker === false"
@@ -152,7 +154,7 @@
                   flat
                   color="indigo lighten-1"
                   class="elevation-0"
-                  v-if="diseaseInput === false && this.updatedDiseases.length !== 0"
+                  v-if="diseaseInput === false"
                   @click="diseaseInput = true"
                 >
                   <v-icon small dark>edit</v-icon>
@@ -162,40 +164,41 @@
                   fab
                   ligth
                   flat
-                  color="red lighten-1"
+                  color="green lighten-1"
                   class="elevation-0"
-                  v-else-if="diseaseInput === true && this.updatedDiseases.length !==0"
-                  @click="diseaseInput = false"
+                  v-if="diseaseInput === true"
+                  @click="close"
                 >
-                  <v-icon small dark>close</v-icon>
+                  <v-icon small dark>check</v-icon>
                 </v-btn>
               </v-layout>
-              <v-flex xs12>
-                <v-layout justify-center>
-                  <v-flex xs6>
-                    <v-text-field
-                      v-model="newDisease"
-                      label="introduce un nuevo registro"
-                      hint="Para terminar, presiona enter."
-                      required
-                      color="indigo lighten-1"
-                      class="mt-3 partial-width"
-                      clearable
-                      @keydown.enter="addDisease"
-                    ></v-text-field>
-                  </v-flex>
+              <v-flex v-if="medical.diseases.length === 0 && this.diseaseInput === false">
+                <span class="body-2 blue-grey--text text--darken-4">sin información</span>
+              </v-flex>
+              <v-flex xs8 v-if="this.diseaseInput === true">
+                <v-layout align-center>
+                  <v-text-field
+                    v-model="newDisease"
+                    label="introduce un nuevo registro"
+                    hint="Para terminar, presiona enter."
+                    required
+                    color="indigo lighten-1"
+                    class="my-3"
+                    clearable
+                    @keydown.enter="addDiseaseToArray"
+                  ></v-text-field>
                 </v-layout>
               </v-flex>
 
-              <ul v-if="medical.diseases.length !== 0">
-                <li class="my-0" v-for="(disease, index) in diseases" :key="index">
+              <ul v-if="medical.diseases.length !== 0" class="pa-0">
+                <li class="my-0" v-for="(disease, index) in medical.diseases" :key="index">
                   <v-btn
                     flat
                     fab
                     small
                     color="red lighten-1"
                     v-if="diseaseInput"
-                    @click="deleteDisease(index)"
+                    @click="deleteDiseaseFromArray(index)"
                   >
                     <v-icon small>delete</v-icon>
                   </v-btn>
@@ -207,6 +210,8 @@
               </ul>
             </v-layout>
           </v-flex>
+          </v-layout>
+
         </v-layout>
       </v-card-text>
     </v-card>
@@ -228,16 +233,15 @@ export default {
   props: {
     personal: Object,
     professional: Object,
-    medical: Object,
     legal: Object,
     additional: Object,
-    diseases: Array,
     contactInfo: Object,
     clientId: String
   },
   data() {
     return {
       moment: moment,
+      medical: {},
       diseaseInput: false,
       newDisease: "",
       updatedDiseases: [],
@@ -245,63 +249,41 @@ export default {
     };
   },
   methods: {
+    close () {
+      this.saveDiseases()
+    },
     reRender() {
       this.$emit("reRenderCard");
     },
-    addDisease() {
-      this.updatedDiseases.push(this.newDisease);
-
-      axios
-        .put("http://localhost:3000/clients/" + this.clientId, {
-          medicalInfo: {
-            diseases: this.updatedDiseases,
-            isSmoker: this.isSmoker
-          }
-        })
-        .then(res => {
-          this.reRender;
-          this.newDisease = "";
-        })
-        .catch(err => {
-          alert(
-            "Lo sentimos, no se pudo agregar el registro, favor de intentar más tarde."
-          );
-        });
+    addDiseaseToArray() {
+      this.medical.diseases.push(this.newDisease);
+      this.newDisease = '';
     },
-    deleteDisease(index) {
-      this.updatedDiseases.splice(index, 1);
-
+    deleteDiseaseFromArray(index) {
+      this.medical.diseases.splice(index, 1);
+    },
+    saveDiseases() {
       axios
         .put("http://localhost:3000/clients/" + this.clientId, {
-          medicalInfo: {
-            diseases: this.updatedDiseases,
-            isSmoker: this.isSmoker
-          }
+          medicalInfo: this.medical
         })
         .then(res => {
-          this.reRender();
-          this.newDisease = "";
+          this.diseaseInput = false;
         })
         .catch(err => {
           alert(
-            "Lo sentimos, no se pudo eliminar el registro, favor de intentar más tarde."
+            "Lo sentimos, no se pudo editar el registro, favor de intentar más tarde."
           );
         });
     },
     smokerToggle() {
-      this.isSmoker = !this.isSmoker;
-
+      this.medical.isSmoker = !this.medical.isSmoker
 
       axios
         .put("http://localhost:3000/clients/" + this.clientId, {
-          medicalInfo: {
-            diseases: this.updatedDiseases,
-            isSmoker: this.isSmoker
-          }
+          medicalInfo: this.medical
         })
         .then(res => {
-          this.isSmoker = this.medical.isSmoker;
-          this.reRender();
           this.newDisease = "";
         })
         .catch(err => {
@@ -309,11 +291,26 @@ export default {
             "Lo sentimos, no se pudo cambiar el registro, favor de intentar más tarde."
           );
         });
+    },
+    getMedical(clientId) {
+      const url = "http://localhost:3000/clients/" + clientId;
+      axios
+        .get(url)
+        .then(res => {
+          this.medical = res.data.data.medicalInfo
+        })
+        .catch(err => {
+          alert("Error al consultar cliente", err);
+        });
     }
   },
-  created() {
-    this.updatedDiseases = this.diseases;
-    this.isSmoker = this.medical.isSmoker;
+  computed: {
+    updateInfo () {
+      return this.getMedical(this.clientId)
+    }
+  },
+  mounted() {
+    this.getMedical(this.clientId);
   }
 };
 </script>
