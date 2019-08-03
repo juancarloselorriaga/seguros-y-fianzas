@@ -34,7 +34,7 @@
                   :medical="items.medicalInfo"
                   :diseases="items.medicalInfo.diseases"
                   :clientId="items._id"
-                  @reRenderDataTable="reRenderCard"
+                  @reRenderCard="reRenderCard"
                 />
               </v-flex>
             </v-layout>

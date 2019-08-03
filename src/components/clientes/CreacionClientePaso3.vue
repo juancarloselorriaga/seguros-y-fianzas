@@ -8,7 +8,7 @@
           Cargar PDF
           <v-icon right>add</v-icon>
           </v-btn>
-          <NuevaPoliza :idClienteNuevo="idClienteNuevo" />
+          <NuevaPoliza :idClienteNuevo="idClienteNuevo" @reRender="reRender" />
           </v-flex>
         
         </v-layout>
@@ -40,13 +40,16 @@ export default {
     };
   },
   methods: {
+    reRender() {
+      this.$emit("reRender");
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
       }
     },
     terminar () {
-      this.$emit("terminar");
+      this.$emit("terminarProceso");
     },
   }
 };

@@ -381,7 +381,7 @@ export default {
       selectMoneda: null,
       monedaItems: ["USD", "MXN", "EUR", "UDI"],
       selectMetodoDePago: null,
-      metodoDePagoItems: ["Agente", "Cargo automático", "Vía Telefónica"],
+      metodoDePagoItems: ["Agente", "Cargo automático", "Via Telefónica"],
       tieneExtraPrima: false,
       causaExtraPrima: "",
       nombrePlan: "",
@@ -476,10 +476,8 @@ export default {
           this.insured = null,
           this.buyer = null
           //Resetear todos los campos a sus valores originales
-          //Cerrar modal anterior
-          //Resetear el cliente a null
           //Resetear al comprador y al asegurado
-          //this.$emit("reRenderDataTable"); Hacerlo con el componente correcto (cliente)
+          this.$emit("reRender");
           this.dialog = false
           })
         .catch(err => {alert('ocurrió un error, revisa tus datos.')});

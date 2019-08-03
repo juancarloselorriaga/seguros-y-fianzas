@@ -8,15 +8,10 @@
       <v-card-text class="my-0">
         <v-layout>
         <v-flex xs12>
-           <CreacionCliente @reRenderDataTable="reRender" @cerrarModal="dialog = false" @terminar="terminar"/>
+           <CreacionCliente @reRenderCard="reRenderCard" @reRender="reRender" @cerrarModal="dialog = false" @terminarProceso="terminar"/>
         </v-flex>
         </v-layout>
       </v-card-text>
-
-      <!-- <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="amber darken-4" flat @click="dialog = false">Cerrar</v-btn>
-      </v-card-actions> -->
     </v-card>
   </v-dialog>
 </template>
@@ -37,7 +32,10 @@ export default {
   },
   methods: {
     reRender() {
-      this.$emit('reRenderDataTable');
+      this.$emit('reRender');
+    },
+    reRenderCard() {
+      this.$emit('reRenderCard');
     },
     terminar () {
       this.$emit('terminar');

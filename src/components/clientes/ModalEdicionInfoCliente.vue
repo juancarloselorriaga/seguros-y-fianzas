@@ -1,7 +1,7 @@
 <template>
-  <v-dialog v-model="dialog" width="920">
+  <v-dialog v-model="dialog" width="920" persistent>
     <template v-slot:activator="{ on }">
-      <v-btn small fab flat dark color="indigo lighten-1" class="elevation-0" v-on="on"><v-icon dark>edit</v-icon></v-btn>
+      <v-btn small fab flat dark color="indigo lighten-1" class="elevation-0" v-on="on" @click="reLoad"><v-icon dark>edit</v-icon></v-btn>
     </template>
 
     <v-card class="pa-3">
@@ -204,6 +204,9 @@ export default {
     };
   },
   methods: {
+    reLoad() {
+       this.getClientData();
+    },
     cerrar() {
       this.dialog = false;
     },
@@ -213,7 +216,7 @@ export default {
       }
     },
   reRender() {
-      this.$emit('reRenderDataTable');
+      this.$emit('reRenderCard');
     },
     saveClientPersonalInfo() {
       this.validate();
@@ -240,7 +243,7 @@ export default {
           }
         })
         .then(res => {
-          this.$emit("reRenderDataTable");
+          this.$emit('reRenderCard');
           this.dialog = false;
           // alert('Cliente actualizado con éxito')
         })

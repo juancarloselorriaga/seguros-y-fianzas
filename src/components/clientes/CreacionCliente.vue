@@ -14,15 +14,15 @@
 
     <v-stepper-items>
       <v-stepper-content step="1">
-        <CreacionClientePaso1 @reRenderDataTable="reRender" @nextStep="nextStep" @clienteCreado="asignarIdClienteNuevo" @closeModal="closeModal" />
+        <CreacionClientePaso1 @reRenderDataTable="reRender" @nextStep="nextStep" @clienteCreado="asignarIdClienteNuevo" @closeModal="closeModal" :key="resetFieldsKeyPage1"/>
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <CreacionClientePaso2 @reRenderDataTable="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo"/>
+        <CreacionClientePaso2 @reRenderDataTable="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo" :key="resetFieldsKeyPage2"/>
       </v-stepper-content>
 
       <v-stepper-content step="3">
-          <CreacionClientePaso3 @reRenderDataTable="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo" @terminar="terminar"/>
+          <CreacionClientePaso3 @reRender="reRender" @nextStep="nextStep" :idClienteNuevo="idClienteNuevo" @terminarProceso="terminar" :key="resetFieldsKeyPage3"/>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -44,7 +44,10 @@ export default {
   data() {
     return {
       next: 1,
-      idClienteNuevo: null
+      idClienteNuevo: null,
+      resetFieldsKeyPage1: 100,
+      resetFieldsKeyPage2: 200,
+      resetFieldsKeyPage3: 300
     };
   },
   methods: {
@@ -52,7 +55,11 @@ export default {
       this.$emit('cerrarModal')
     },
     terminar () {
-      this.$emit('terminar')
+      this.$emit('terminarProceso')
+      this.resetFieldsKeyPage1 += 1
+      this.resetFieldsKeyPage2 += 1;
+      this.resetFieldsKeyPage3 += 1
+      this.next = 1
     },
     asignarIdClienteNuevo (idCliente) {
       this.idClienteNuevo = idCliente;
@@ -62,7 +69,10 @@ export default {
     },
     reRender() {
       this.$emit('reRenderDataTable');
-    }
+    },
+    reRenderCard() {
+      this.$emit("reRenderCard");
+    },
   }
 };
 </script>

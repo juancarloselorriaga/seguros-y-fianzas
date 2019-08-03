@@ -76,13 +76,13 @@ export default {
     return {
       search: "",
       pagination: {
-        rowsPerPage: 5, //default filas al cargar la página
+        rowsPerPage: -1, //default filas al cargar la página
         sortBy: "nombre",
         descending: true
       },
       headers: [
         { text: "Nombre", align: "left", value: "personalInfo.name" },
-        { text: "Pólizas", align: "center", value: "vigentes" },
+        { text: "Pólizas vigentes", align: "center", value: "vigentes" },
         { text: "", align: "center", value: "icon" }
       ]
     }
