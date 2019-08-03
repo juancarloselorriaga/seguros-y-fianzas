@@ -5,15 +5,85 @@
     </v-layout>
     <v-card class="radius-3 my-4">
       <v-card-title>
-        <h2 class="subheading font-weight-bold blue-grey--text text--darken-2">Datos generales</h2>
+        <v-layout v-if="generalInfoEditMode">
+          <v-flex xs9>
+
+              <v-text-field
+                v-model="general.personalInfo.name"
+                label="nombre"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="mx-3"
+                clearable
+                    >
+              </v-text-field>
+          </v-flex>
+            </v-layout>
+        <h2 class="subheading font-weight-bold blue-grey--text text--darken-2" v-else>Datos generales</h2>
         <v-spacer></v-spacer>
-        <ModalEdicionInfoCliente :clientId="clientId" @reRenderCard="reRender" />
+        <v-btn
+                  small
+                  fab
+                  ligth
+                  flat
+                  color="indigo lighten-1"
+                  class="elevation-0"
+                  @click="generalInfoEditMode = true"
+                  v-if="generalInfoEditMode === false"
+                >
+                  <v-icon small dark>edit</v-icon>
+                </v-btn>
+                <v-btn
+                  small
+                  fab
+                  ligth
+                  flat
+                  color="green lighten-1"
+                  class="elevation-0"
+                  v-if="generalInfoEditMode === true"
+                  @click="closeGeneral"
+                >
+                  <v-icon small dark>check</v-icon>
+                </v-btn>
       </v-card-title>
 
       <v-card-text>
-        <v-layout wrap>
+        
+        <v-layout column>
+          <v-layout wrap >
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-menu
+                        color="indigo lighten-1"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        lazy
+                        transition="scale-transition"
+                        offset-y
+                        full-width
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                            v-model="general.personalInfo.birthdate"
+                            label="Fecha de nacimiento"
+                            readonly
+                            v-on="on"
+                            color="indigo lighten-1"
+                            class="ma-3"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="general.personalInfo.birthdate"
+                          @input="menu = false"
+                          locale="es-419"
+                          color="indigo lighten-1"
+                        ></v-date-picker>
+                      </v-menu>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Fecha de nacimiento</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
@@ -24,7 +94,17 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-select
+                color="indigo lighten-1"
+                v-model="general.personalInfo.maritalStatus"
+                :items="itemsEstadoCivil"
+                label="género"
+                required
+                class="ma-3"
+              ></v-select>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Estado civil</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-lowercase"
@@ -35,7 +115,17 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-select
+                color="indigo lighten-1"
+                v-model="general.personalInfo.gender"
+                :items="itemsGenero"
+                label="género"
+                required
+                class="ma-3"
+              ></v-select>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Género</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-lowercase"
@@ -46,7 +136,19 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode" wrap>
+              <v-text-field
+                v-model="general.professionalInfo.company"
+                label="compañía"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Compañia</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-capitalize"
@@ -57,7 +159,19 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-text-field
+                v-model="general.professionalInfo.occupation"
+                label="ocupación"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Ocupación</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-capitalize"
@@ -68,7 +182,19 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-text-field
+                v-model="general.legalInfo.rfc"
+                label="RFC"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">RFC</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-uppercase"
@@ -79,7 +205,19 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-text-field
+                v-model="general.legalInfo.curp"
+                label="CURP"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">CURP</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-uppercase"
@@ -90,7 +228,19 @@
           </v-flex>
 
           <v-flex xs6 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-text-field
+                v-model="general.additionalInfo.reference"
+                label="referencia"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Referencia</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
@@ -101,7 +251,19 @@
           </v-flex>
 
           <v-flex xs12 class="mb-3">
-            <v-layout column>
+            <v-layout v-if="generalInfoEditMode">
+              <v-text-field
+                v-model="general.additionalInfo.comments"
+                label="comentarios"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+            </v-layout>
+            <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Comentarios</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
@@ -110,8 +272,9 @@
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin comentarios</span>
             </v-layout>
           </v-flex>
+          </v-layout>
 
-          <v-layout column v-if="this.medical.diseases" :key="updateInfo"> 
+          <v-layout column v-if="this.medical.diseases" :key="updateMedical"> 
           <h2 class="subheading font-weight-bold blue-grey--text text--darken-2 my-4">Datos médicos</h2>
 
           <v-flex xs12 class="mb-3">
@@ -245,12 +408,21 @@ export default {
       diseaseInput: false,
       newDisease: "",
       updatedDiseases: [],
-      isSmoker: Boolean
+      isSmoker: Boolean,
+      generalInfoEditMode: false,
+      general: {},
+      itemsGenero: ["Hombre", "Mujer", "Otro"],
+      itemsEstadoCivil: ["Soltero", "Casado"],
+      menu: false,
+      professionalInfoKey: 0
     };
   },
   methods: {
     close () {
       this.saveDiseases()
+    },
+    closeGeneral () {
+      this.saveGeneral()
     },
     reRender() {
       this.$emit("reRenderCard");
@@ -269,6 +441,24 @@ export default {
         })
         .then(res => {
           this.diseaseInput = false;
+        })
+        .catch(err => {
+          alert(
+            "Lo sentimos, no se pudo editar el registro, favor de intentar más tarde."
+          );
+        });
+    },
+    saveGeneral() {
+      axios
+        .put("http://localhost:3000/clients/" + this.clientId, {
+          personalInfo: this.general.personalInfo,
+          professionalInfo: this.general.professionalInfo,
+          legalInfo: this.general.legalInfo,
+          additionalInfo: this.general.additionalInfo
+        })
+        .then(res => {
+          this.generalInfoEditMode = false;
+          this.reRender();
         })
         .catch(err => {
           alert(
@@ -302,15 +492,28 @@ export default {
         .catch(err => {
           alert("Error al consultar cliente", err);
         });
+    },
+    getGeneral(clientId) {
+      const url = "http://localhost:3000/clients/" + clientId;
+      axios
+        .get(url)
+        .then(res => {
+          this.general = res.data.data
+        })
+        .catch(err => {
+          alert("Error al consultar cliente", err);
+        });
     }
   },
   computed: {
-    updateInfo () {
+    updateMedical () {
+      this.generalInfoEditMode = false;
       return this.getMedical(this.clientId)
-    }
+    },
   },
   mounted() {
     this.getMedical(this.clientId);
+    this.getGeneral(this.clientId)
   }
 };
 </script>

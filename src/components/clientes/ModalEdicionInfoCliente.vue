@@ -57,9 +57,8 @@
                       >
                         <template v-slot:activator="{ on }">
                           <v-text-field
-                            outline
                             v-model="date"
-                            label="Fecha de nacimiento"
+                            label="fecha de nacimiento"
                             readonly
                             v-on="on"
                             color="indigo lighten-1"
