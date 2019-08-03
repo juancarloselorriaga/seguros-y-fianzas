@@ -17,29 +17,30 @@
             class="subheading font-weight-bold blue-grey--text text--darken-2"
           >{{ contact.contactId.title }}</h2>
           <v-spacer></v-spacer>
-                  <v-btn
-                  small
-                  fab
-                  ligth
-                  flat
-                  color="indigo lighten-1"
-                  class="elevation-0"
-                  @click="singleCardEdit(contact.contactId._id)"
-                  v-if="editMode === false"
-                >
-                  <v-icon small dark>edit</v-icon>
-                </v-btn>
-                <v-btn
-                  small
-                  fab
-                  dark
-                  color="green lighten-1"
-                  class="elevation-0"
-                  v-if="editMode === true"
-                  @click="close"
-                >
-                  <v-icon small dark>check</v-icon>
-                </v-btn>
+          <v-btn
+            small
+            fab
+            ligth
+            flat
+            color="indigo lighten-1"
+            class="elevation-0"
+            @click="singleCardEdit(contact.contactId._id, index)"
+            :checker="editModeChecker"
+            v-if="!contact.contactId.editMode"
+          >
+            <v-icon small dark>edit</v-icon>
+          </v-btn>
+          <v-btn
+            small
+            fab
+            dark
+            color="green lighten-1"
+            class="elevation-0"
+            v-if="contact.contactId.editMode"
+            @click="close"
+          >
+            <v-icon small dark>check</v-icon>
+          </v-btn>
           <v-btn
             small
             fab
@@ -159,11 +160,38 @@ export default {
   data() {
     return {
       editMode: false,
+      editedCardIndex: Number
     }
   },
   methods: {
-    singleCardEdit (cardId) {
-     this.editMode = true
+    singleCardEdit (cardId, index) {
+      this.contactInfo.forEach(e => {
+        e.contactId.editMode = false;
+      })
+      let updatedCard = this.contactInfo[index];
+      updatedCard.contactId.editMode = true;
+      updatedCard.contactId.title = 'Prueba de edición aprobada 2'
+      this.editedCardIndex = index
+
+      this.saveEditSatus(updatedCard, index);
+    },
+    saveEditSatus(updatedCard, index) {
+      let cardId = updatedCard.contactId._id
+      console.log(cardId)
+      axios
+        .put('http://localhost:3000/contact-info/' + cardId, {
+          contactInfo: updatedCard
+        })
+        .then(res => {
+          console.log('update correcto')
+        })
+        .catch(err => {
+          alert(
+            "Lo sentimos, no se pudo editar el registro, favor de intentar más tarde."
+          );
+        });
+        //Tengo que poner todos los campos editables para poder guardar la info.
+        //Tengo que hacer métodos get para poder tener actualizada la información y en tiempo real.
     },
     close () {
       this.editMode = false;
@@ -184,8 +212,14 @@ export default {
     },
     reRender() {
       this.$emit("reRenderCard");
-    }
+    },
+  },
+  computed: {
+editModeChecker () {
+    return !this.contactInfo[this.editedCardIndex]
   }
+  }
+  
 };
 </script>
 
