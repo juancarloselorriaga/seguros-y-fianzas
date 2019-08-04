@@ -2,7 +2,7 @@
   <v-card class="pt-2 pb-2 radius-3" >
     <v-layout column class="white">
       <v-card-title>
-        <span class="headline blue-grey--text text--darken-4 my-1">{{items.personalInfo.name}}</span>
+        <span class="headline blue-grey--text text--darken-4 ml-2 my-1">{{items.personalInfo.name}}</span>
         <v-spacer></v-spacer>
         <Menu :items="clientOptions" icon="more_vert" @menuItemClicked="menuCallsBackendFor" />
         <confirm ref="confirm"></confirm>
@@ -56,7 +56,7 @@
             <v-divider class="my-3"></v-divider>
             <v-layout justify-center class="mt-0">
               <v-flex xs11>
-                <TarjetaPolizasRelacionadas :polizasRelacionadas="items.policies" />
+                <TarjetaPolizasRelacionadas :polizasRelacionadas="items.policies" :clientId="items._id"/>
               </v-flex>
             </v-layout>
           </v-card>

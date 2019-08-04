@@ -5,17 +5,17 @@
     <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
   </v-layout>
     <v-list subheader>
-      
-        <div v-for="item in polizasRelacionadas" :key="item.title" avatar @click>
+
+        <ModalVerPoliza  v-if="modalVisible" @close="modalVisible = false" :data="policyData" :index="policyIndex" :clientId="clientId" :isVisible="modalVisible"/>
+
+        <div v-for="(item, index) in polizasRelacionadas" :key="index" avatar>
           <v-list-tile v-if="item.policyId !== null" >
         <v-list-tile-content>
           <v-list-tile-title v-html="item.policyId.plan.title"></v-list-tile-title>
         </v-list-tile-content>
-
-        <v-list-tile-action class="pr-3">
-          <v-icon color="indigo lighten-2">visibility</v-icon>
-        </v-list-tile-action>
+            <v-btn fab small flat @click="openModal(item, index)"><v-icon color="indigo lighten-2">visibility</v-icon></v-btn>
         </v-list-tile>
+        <v-divider class="mt-2"></v-divider>
         </div>
       
     </v-list>
@@ -29,15 +29,39 @@
 </template>
 
 <script>
+
+import ModalVerPoliza from "@/components/clientes/ModalVerPoliza.vue";
+
 export default {
   name: "TarjetaPolizasRelacionadas",
+  components: {
+    ModalVerPoliza
+  },
   props: {
     polizasRelacionadas: Array,
+    clientId: String
   },
   data() {
     return {
+      modalVisible: false,
+      policyData: null,
+      policyIndex: Number
     };
+  },
+  methods: {
+    openModal(data, index) {
+      this.policyData = data;
+      this.policyIndex = index;
+      this.modalVisible = true;
+    }
   }
 };
 </script>
+
+<style scoped>
+.radius-3 {
+  border-radius: 30px !important;
+}
+
+</style>
 

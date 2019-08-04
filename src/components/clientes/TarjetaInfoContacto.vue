@@ -13,8 +13,23 @@
     <div flat v-for="(contact, index) in contactInfo" :key="index">
       <v-card v-if="contact.contactId !== null" class="radius-3 my-4" :key="reRenderKey">
         <v-card-title>
+          <v-layout v-if="contact.contactId.editMode">
+            <v-flex xs9>
+                <v-text-field
+                  v-model="contact.contactId.title"
+                  label="nombre"
+                  hint="Para guardar, cierra el modo edición."
+                  required
+                  color="indigo lighten-1"
+                  class="mx-3"
+                  clearable
+                      >
+                </v-text-field>
+            </v-flex>
+          </v-layout>
           <h2
             class="subheading font-weight-bold blue-grey--text text--darken-2"
+            v-else
           >{{ contact.contactId.title }}</h2>
           <v-spacer></v-spacer>
           <v-btn
@@ -49,6 +64,7 @@
             color="red lighten-1"
             class="elevation-0"
             @click="deleteCard(contact.contactId._id)"
+            v-if="contact.contactId.editMode"
           >
             <v-icon dark>delete</v-icon>
           </v-btn>
@@ -57,7 +73,19 @@
         <v-card-text>
           <v-layout wrap>
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.email"
+                label="email"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Mail</span>
                 <span
                   class="body-1 blue-grey--text text--darken-4 text-truncate"
@@ -66,21 +94,57 @@
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.phone"
+                label="teléfono"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Teléfono</span>
                 <span class="body-1 blue-grey--text text--darken-4">{{contact.contactId.phone}}</span>
               </v-layout>
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.mobile"
+                label="móvil"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Móvil</span>
                 <span class="body-1 blue-grey--text text--darken-4">{{contact.contactId.mobile}}</span>
               </v-layout>
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.address.street"
+                label="dirección"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Dirección</span>
                 <span
                   class="body-1 blue-grey--text text--darken-4"
@@ -89,7 +153,19 @@
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.address.municipality"
+                label="municipio o delegación"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Municipio o delegación</span>
                 <span
                   class="body-1 blue-grey--text text--darken-4"
@@ -98,7 +174,19 @@
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.address.state"
+                label="estado"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Estado</span>
                 <span
                   class="body-1 blue-grey--text text--darken-4"
@@ -107,14 +195,38 @@
             </v-flex>
 
             <v-flex xs6 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.address.cp"
+                label="CP"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">CP</span>
                 <span class="body-1 blue-grey--text text--darken-4">{{contact.contactId.address.cp}}</span>
               </v-layout>
             </v-flex>
 
             <v-flex xs12 class="mb-3">
-              <v-layout column>
+              <v-layout column v-if="editedCardIndex === index">
+                <v-text-field
+                v-model="contact.contactId.address.additionalInfo"
+                label="información adicional"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Información adicional</span>
                 <span
                   class="body-1 blue-grey--text text--darken-4"
@@ -159,8 +271,8 @@ export default {
   },
   data() {
     return {
-      editMode: false,
-      editedCardIndex: Number
+      editedCardIndex: null,
+      editedCard: {}
     }
   },
   methods: {
@@ -170,20 +282,31 @@ export default {
       })
       let updatedCard = this.contactInfo[index];
       updatedCard.contactId.editMode = true;
-      updatedCard.contactId.title = 'Prueba de edición aprobada 2'
       this.editedCardIndex = index
-
-      this.saveEditSatus(updatedCard, index);
+      this.editedCard = updatedCard
     },
-    saveEditSatus(updatedCard, index) {
+    saveEditStatus(updatedCard, index) {
       let cardId = updatedCard.contactId._id
-      console.log(cardId)
       axios
         .put('http://localhost:3000/contact-info/' + cardId, {
-          contactInfo: updatedCard
+          title: updatedCard.contactId.title,
+          email: updatedCard.contactId.email,
+          phone: updatedCard.contactId.phone,
+          mobile: updatedCard.contactId.mobile,
+          address: {
+            street: updatedCard.contactId.address.street,
+            number: updatedCard.contactId.address.number,
+            neighborhood: updatedCard.contactId.address.neighborhood,
+            municipality: updatedCard.contactId.address.municipality,
+            state: updatedCard.contactId.address.state,
+            cp: updatedCard.contactId.address.cp,
+            additionalInfo: updatedCard.contactId.address.additionalInfo,
+          }
         })
         .then(res => {
-          console.log('update correcto')
+          updatedCard.contactId.editMode = false;
+          this.editedCard = {},
+          this.editedCardIndex = null
         })
         .catch(err => {
           alert(
@@ -194,8 +317,7 @@ export default {
         //Tengo que hacer métodos get para poder tener actualizada la información y en tiempo real.
     },
     close () {
-      this.editMode = false;
-      // this.saveContactCard()
+      this.saveEditStatus(this.editedCard, this.editedCardIndex);
     },
     async deleteCard(cardId) {
        if (await this.$refs.confirm.open('Borrar tarjeta de contacto', '¿Estás seguro de querer borrar ésta tarjeta de contacto? Esta acción es irreversible', { color: 'red' })) {
@@ -217,7 +339,7 @@ export default {
   computed: {
 editModeChecker () {
     return !this.contactInfo[this.editedCardIndex]
-  }
+  },
   }
   
 };
