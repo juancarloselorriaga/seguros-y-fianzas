@@ -56,11 +56,7 @@
             <v-card flat class="py-3 radius-3 elevation-3">
               <v-layout justify-center class="mt-0">
                 <v-flex xs11>
-                  <h2>Componente gestión de archivos - PENDIENTE</h2>
-                  <!-- <v-btn dark color="indigo lighten-1" class="elevation-0 rounded">
-                    PDF
-                    <v-icon dark right>attach_file</v-icon>
-                  </v-btn> -->
+                  <VerPolizaArchivos :policyId="data.policyId._id"/>
                 </v-flex>
               </v-layout>
             </v-card>
@@ -93,6 +89,7 @@ import VerPolizaDatosGenerales from "@/components/clientes/VerPolizaDatosGeneral
 import VerPolizaPlan from "@/components/clientes/VerPolizaPlan.vue";
 import VerPolizaDireccion from "@/components/clientes/VerPolizaDireccion.vue";
 import VerPolizaClientesrelacionados from "@/components/clientes/VerPolizaClientesRelacionados.vue";
+import VerPolizaArchivos from "@/components/clientes/VerPolizaArchivos.vue";
 import Confirm from "@/components/utilities/Confirm.vue";
 import Menu from "@/components/utilities/Menu.vue";
 
@@ -103,6 +100,7 @@ export default {
     VerPolizaPlan,
     VerPolizaDireccion,
     VerPolizaClientesrelacionados,
+    VerPolizaArchivos,
     Menu,
     Confirm
   },
