@@ -6,7 +6,7 @@
       >Resumen general pólizas</h2>
       <v-card class="elevation-1 pa-3 my-5 radius-3"> 
 
-      <v-layout my-5 >
+      <v-layout my-5 v-if="items.policies.length > 0">
         <v-flex xs4>
           <v-layout column justify-center>
             <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
@@ -18,7 +18,7 @@
         <v-flex xs4>
           <v-layout column justify-center>
             <span class="headline text-xs-center mb-2">{{items.policies.length}}</span>
-            <span class="body-1 text-xs-center">En periodo de renovación</span>
+            <span class="body-1 text-xs-center">Renovación</span>
             <v-icon large class="mt-3" color="amber lighten-1">warning</v-icon>
           </v-layout>
         </v-flex>
@@ -30,6 +30,10 @@
             <v-icon large class="mt-3" color="red lighten-1">error</v-icon>
           </v-layout>
         </v-flex>
+      </v-layout>
+      <v-layout v-else align-center justify-center>
+        <h2 class="pa-4 title blue-grey--text text--lighten-2">Sin pólizas relacionadas</h2>
+        <v-icon large right color="blue-grey lighten-2">error</v-icon>
       </v-layout>
       </v-card>
     </v-flex>

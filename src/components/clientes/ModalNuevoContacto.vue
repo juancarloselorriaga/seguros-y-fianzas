@@ -19,6 +19,7 @@
 <script>
 
 import NuevaTarjetaContacto from "@/components/clientes/NuevaTarjetaContacto.vue";
+import axios from "axios";
 
 export default {
   name: 'ModalNuevoContacto',
@@ -30,7 +31,8 @@ export default {
   },
   data () {
     return {
-      dialog: false
+      dialog: false,
+      contacts: null
     }
   },
   methods: {

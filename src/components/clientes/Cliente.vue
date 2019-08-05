@@ -56,7 +56,7 @@
             <v-divider class="my-3"></v-divider>
             <v-layout justify-center class="mt-0">
               <v-flex xs11>
-                <TarjetaPolizasRelacionadas :polizasRelacionadas="items.policies" :clientId="items._id"/>
+                <TarjetaPolizasRelacionadas :clientId="items._id" @reRenderCard="reRenderCard" @reRenderDataTable="reRender"/>
               </v-flex>
             </v-layout>
           </v-card>

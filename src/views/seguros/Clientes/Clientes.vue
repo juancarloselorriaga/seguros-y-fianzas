@@ -12,7 +12,9 @@
           <v-spacer></v-spacer>
           <v-layout justify-end>
             <ModalNuevoCliente @reRenderCard="reRenderCard" @reRender="reRender" @terminar="terminar" />
-            <v-btn outline color="indigo lighten-1" @click="reRender">Exportar</v-btn>
+            <v-btn flat color="indigo lighten-1" @click="reRender">Actualzar
+              <v-icon right>refresh</v-icon>
+            </v-btn>
           </v-layout>
         </v-layout>
       </v-flex>
@@ -32,6 +34,7 @@
                 @reRenderDataTable="reRender"
                 @reRenderCard="reRenderCard"
                 :key="cardKey"
+                :reRenderTab="reRenderTab"
               />
             </v-flex>
           </transition>
@@ -59,7 +62,8 @@ export default {
     return {
       selectedClient: null,
       listKey: 100,
-      cardKey: 200
+      cardKey: 200,
+      reRenderTab: null
     };
   },
   methods: {
@@ -71,7 +75,8 @@ export default {
         return (this.listKey += 1);
       }, 300);
     },
-    reRenderCard() {
+    reRenderCard(tab) {
+      this.reRenderTab = tab
       let row = this.selectedClient;
       this.selectRow(row);
       this.getClients().then(res => {

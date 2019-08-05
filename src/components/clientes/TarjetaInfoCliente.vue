@@ -324,10 +324,9 @@
                 <v-btn
                   small
                   fab
-                  ligth
-                  flat
-                  color="green lighten-1"
-                  class="elevation-0"
+                  dark
+                  flat 
+                  class="elevation-0 green lighten-1"
                   v-if="diseaseInput === true"
                   @click="close"
                 >
