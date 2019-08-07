@@ -1,11 +1,13 @@
 <template>
   <div>
-    <v-layout justify-space-around class="mt-0">
-      <v-flex xs6 class="mx-2">
-        <SimpleUpload />
+    <v-layout column class="mt-0">
+      
+      <v-flex xs8 class="mx-2">
+        <ArchivosDePoliza :policyId="policyId" :key="keyChecker"/>
       </v-flex>
-      <v-flex xs6 class="mx-2">
-        <MultipleUpload />
+
+      <v-flex xs4 class="mx-2">
+        <SimpleUpload @fileUploaded="fileUploaded" :policyId="policyId"/>
       </v-flex>
     </v-layout>
   </div>
@@ -14,7 +16,7 @@
 <script>
 import axios from "axios";
 import SimpleUpload from "@/components/utilities/SimpleUpload.vue";
-import MultipleUpload from "@/components/utilities/MultipleUpload.vue";
+import ArchivosDePoliza from "@/components/clientes/ArchivosDePoliza.vue";
 
 export default {
   props: {
@@ -22,14 +24,15 @@ export default {
   },
   components: {
     SimpleUpload,
-    MultipleUpload
+    ArchivosDePoliza
   },
   data() {
     return {
       valid: true,
       title: "",
       description: "",
-      file: null
+      file: null,
+      filesKey: null
     };
   },
   methods: {
@@ -51,6 +54,17 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    fileUploaded(res){
+      this.filesKey = res;
+    }
+  },
+  computed: {
+    keyChecker () {
+      if(this.filesKey !== null){
+        return (this.filesKey).toString();
+      }
+        return this.filesKey
     }
   }
 };
