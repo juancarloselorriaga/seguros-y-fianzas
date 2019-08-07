@@ -1,6 +1,5 @@
 <template>
-  <v-layout justify-space-around>
-    <v-flex xs5>
+    <v-flex xs12>
       <form enctype="multipart/form-data" @submit.prevent="sendFile">
         <v-layout justify-start column>
           <v-layout class="pa-4 outline radius-3" justify-center align-center>
@@ -46,16 +45,6 @@
         </v-layout>
       </form>
     </v-flex>
-
-    <v-flex xs5>
-      <v-card class="radius-3 pa-2">
-        <v-card-title>
-          <h2 class="title blue-grey--text text--darken-4">Archivos guardados</h2>
-        </v-card-title>
-        <v-card-text></v-card-text>
-      </v-card>
-    </v-flex>
-  </v-layout>
 </template>
 
 <script>
@@ -67,7 +56,8 @@ export default {
     return {
       file: "",
       message: "",
-      error: false
+      error: false,
+      uploadedFiles: []
     };
   },
   methods: {
@@ -84,11 +74,11 @@ export default {
           this.message = "";
       } else {
         this.error = true;
-        this.message = tooLarge ? `Archivo muy grande. El tamaño máximo es de ${MAX_SIZE / 1000} kB` : 'Error: solo se permiten archivos png, jpeg y PDF.'
+        this.message = tooLarge ? `Archivo muy grande. El tamaño máximo es de ${MAX_SIZE / 1000} Kb` : 'Error: solo se permiten archivos png, jpeg y PDF.'
       }
     },
     async sendFile() {
-      const url = `http://localhost:3000/policies/${this.policyId}/add-file`;
+      const url = `http://localhost:3000/policies/${this.policyId}/save-file`;
       const formData = new FormData();
       formData.append("file", this.file);
 
