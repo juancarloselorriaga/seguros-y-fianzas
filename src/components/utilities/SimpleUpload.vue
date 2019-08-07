@@ -58,7 +58,6 @@
             </v-layout> -->
             <v-layout>
               <v-flex xs12 class="text-xs-center">
-                <!-- <button class="button indigo my-2" v-if="!loading">Añadir archivo</button> -->
                 <v-btn flat v-if="loading" :loading="loading" :disabled="loading"></v-btn>
               </v-flex>
             </v-layout>
