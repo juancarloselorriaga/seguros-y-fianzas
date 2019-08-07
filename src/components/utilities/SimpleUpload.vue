@@ -91,10 +91,11 @@ export default {
       
     },
     async sendFile() {
-      const allowedTypes = ["image/jpeg", "image/png", "image/bmp"];
+      const allowedTypes = ["image/jpeg", "image/png", "image/bmp", "application/pdf"]; // , "application/pdf"
       const file = this.$refs.file.files[0];
       const MAX_SIZE = 2000000;
       const tooLarge = file.size > MAX_SIZE;
+
 
       //Error hadling del lado del cliente
       if (allowedTypes.includes(file.type) && !tooLarge) {

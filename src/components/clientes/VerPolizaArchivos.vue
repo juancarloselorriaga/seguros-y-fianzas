@@ -56,8 +56,8 @@ export default {
         });
     },
     fileUploaded(res){
-      this.filesKey = res;
-    }
+        this.filesKey = res.data.file;
+      }
   },
   computed: {
     keyChecker () {

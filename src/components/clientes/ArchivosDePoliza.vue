@@ -1,27 +1,36 @@
 <template>
-  <v-layout column class="mt-5">
+  <v-layout column class="mt-2" :checker="updateItems">
     <v-layout justify-start class="mt-0">
       <v-flex xs12>
-        <v-layout align-center justify-start>
+        <v-layout align-center justify-start v-if="files.length !== 0">
           <span class="title my-3 mr-3 font-weight-regular">Archivos disponibles</span>
         </v-layout>
       </v-flex>
     </v-layout>
-    <v-divider class="mb-5"></v-divider>
-    <v-layout wrap class="py-4">
-
-      <v-flex xs2 class="mx-2 text-xs-right" v-for="(file, index) in files" :key="index">
+    <v-divider class="mb-5" v-if="files.length !== 0"></v-divider>
+    <v-layout wrap class="py-2">
+      <v-flex xs3 class="mx-2 text-xs-right" v-for="(file, index) in files" :key="index">
       <v-card class="pa-2 my-1">
         <v-card-title>
-          <span class="body-2 font-weight-medium text-uppercase text-truncate">{{ file.Key | nombreArchivo(index)}}</span>
+          <span class="caption font-weight-regular text-uppercase text-truncate">{{ file.Key | nombreArchivo(index)}} </span>
         </v-card-title>
         <v-card-text>
-          <v-img class="mb-2" :src="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`" aspect-ratio="2"></v-img>
+          <!-- <v-img class="mb-2" :src="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`" aspect-ratio="2"></v-img> -->
+          <v-layout justify-center>
+            <v-icon large color="indigo lighten-1">attach_file</v-icon>
+          </v-layout>
         </v-card-text>
+        <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <a :href="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`">
-            <v-icon right color="blue-grey lighten-1">cloud_download</v-icon> </a>
+          <v-btn fab flat small>
+              <a @click="deleteItem(index)">
+            <v-icon color="red lighten-1">delete</v-icon>
+            </a></v-btn>
+            <v-btn fab flat small>
+              <a :href="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`">
+                <v-icon color="blue-grey lighten-1">cloud_download</v-icon>
+            </a></v-btn>
         </v-card-actions>
       </v-card>
       </v-flex>
@@ -37,6 +46,7 @@ export default {
   name: "ArchivosDePoliza",
   props: {
     policyId: String,
+    checker: String,
   },
   data() {
     return {
@@ -46,19 +56,36 @@ export default {
   methods: {
     async getFiles() {
       const url = `http://localhost:3000/policies/${this.policyId}/get-files`;
-
       try {
         const res = await axios.get(url);
         this.files = res.data.policyFiles;
       } catch (err) {
         alert("Error al consultar los archivos de la póliza", err);
       }
+    },
+    async deleteItem(index){
+      let fileKey = {Key: this.files[index].Key};
+      const url = `http://localhost:3000/policies/${this.policyId}/delete-file`;
+
+      try {
+          const res = await axios.post(url, fileKey)
+          this.getFiles();
+        } catch (err) {
+          this.message = err.response.data.err;
+          this.error = true;
+        }
     }
   },
   filters: {
     nombreArchivo (value, index) {
-      let  newStr = value.split('-')[1].split('.')[0]
+      let  newStr = value.split('-')[1].split('.')[0] + ' ' + value.split('-')[1].split('.')[1]
       return newStr
+    }
+  },
+  computed: {
+    updateItems () {
+      this.getFiles()
+      return this.checker
     }
   },
   mounted() {
