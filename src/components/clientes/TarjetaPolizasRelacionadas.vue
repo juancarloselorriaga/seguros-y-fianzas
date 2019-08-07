@@ -1,5 +1,5 @@
 <template>
-  <div v-if="polizas !== undefined" class="mb-3" :key="reRenderKey">
+  <div v-if="polizas !== undefined" class="mb-3" :key="reRenderKey" :checker="checker">
     <v-layout align-center justify-space-between class="pr-3 mb-3">
     <h2 class="title font-weight-regular blue-grey--text text--darken-2">Pólizas relacionada</h2>
     <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
@@ -56,11 +56,10 @@ export default {
       this.policyIndex = index;
       this.modalVisible = true;
     },
-    terminar () {
+    terminar (arg) {
       this.modalVisible = false
       this.reRenderKey += 1;
       this.getPolicies()
-      // this.$emit("reRenderCard");
     },
     getPolicies() {
       const url = "http://localhost:3000/clients/" + this.clientId;
@@ -79,7 +78,12 @@ export default {
   },
   mounted () {
     this.getPolicies()
-  }
+  },
+    computed: {
+      checker() {
+        return this.terminar(this.clientId)
+      }
+    }
 };
 </script>
 

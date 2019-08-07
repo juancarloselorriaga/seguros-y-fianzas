@@ -28,7 +28,7 @@
           </transition>
 
           <transition name="fade" mode="out-in">
-            <v-flex v-if="selectedClient" xs5 class="ml-4" grow>
+            <v-flex v-if="selectedClient" xs6 class="ml-4" grow>
               <Cliente
                 :items="selectedClient"
                 @reRenderDataTable="reRender"
