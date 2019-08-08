@@ -7,7 +7,7 @@
             <v-form ref="form" v-model="valid" lazy-validation class="pa-0">
               <h2 class="heading blue-grey--text text--darken-4">Contacto</h2>
               <v-text-field
-              outline
+              
                 color="indigo lighten-1"
                 v-model="titulo"
                 :rules="requiredRules"
@@ -16,7 +16,7 @@
               ></v-text-field>
 
               <v-text-field
-              outline
+              
                 v-model="email"
                 :rules="emailRules"
                 label="e-mail"
@@ -25,7 +25,7 @@
               ></v-text-field>
 
               <v-text-field
-              outline
+              
                 ref="phone"
                 mask="phone"
                 v-model="telefono"
@@ -36,7 +36,7 @@
               ></v-text-field>
 
               <v-text-field
-              outline
+              
                 ref="phone"
                 mask="phone"
                 v-model="movil"
@@ -47,7 +47,7 @@
               ></v-text-field>
 
               <v-textarea
-              outline
+              
                 color="indigo lighten-1"
                 auto-grow
                 rows="1"
@@ -62,10 +62,26 @@
         <v-flex xs6>
           <v-layout column class="pl-5">
             <v-form ref="form" v-model="valid" lazy-validation class="pa-0">
-              <h2 class="heading blue-grey--text text--darken-4">Dirección de contacto</h2>
               <v-layout>
+                <h2 class="heading blue-grey--text text--darken-4">Dirección de contacto</h2>
+              </v-layout>
+              <v-layout><v-switch v-model="googleAddress" label="Direcciones de Google" color="indigo lighten-1"></v-switch></v-layout>
+              <v-layout>
+                <v-flex xs12>
+                  <vue-google-autocomplete
+                    ref="address"
+                    id="map"
+                    classname="form-control subheading"
+                    placeholder="Favor de ingresar una dirección"
+                    v-on:placechanged="getAddressData"
+                    country="mx"
+                    v-if="googleAddress"
+                >
+                </vue-google-autocomplete>
+                </v-flex>
+              </v-layout>
+              <v-layout v-if="!googleAddress">
                 <v-text-field
-                outline
                   ref="address"
                   color="indigo lighten-1"
                   v-model="calle"
@@ -75,7 +91,7 @@
                   class="mr-4"
                 ></v-text-field>
                 <v-text-field
-                outline
+                
                 ref="address"
                   color="indigo lighten-1"
                   v-model="numero"
@@ -87,7 +103,7 @@
               </v-layout>
 
               <v-text-field
-              outline
+              v-if="!googleAddress"
                 ref="address"
                 v-model="colonia"
                 :rules="requiredRules"
@@ -96,7 +112,7 @@
                 color="indigo lighten-1"
               ></v-text-field>
               <v-text-field
-              outline
+              v-if="!googleAddress"
               color="indigo lighten-1"
               ref="city"
                 v-model="municipio"
@@ -107,7 +123,7 @@
 
               <v-layout>
                 <v-text-field
-                outline
+                v-if="!googleAddress"
                 ref="state"
                   color="indigo lighten-1"
                   v-model="estado"
@@ -117,7 +133,7 @@
                   class="mr-4"
                 ></v-text-field>
                 <v-text-field
-                outline
+                v-if="!googleAddress"
                 ref="zip"
                   v-model="cp"
                   :rules="requiredRules"
@@ -150,9 +166,14 @@
 <script>
 
 import axios from "axios";
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
+
 
 export default {
   name: "CreacionClientePaso2",
+  components: {
+    VueGoogleAutocomplete
+  },
   props: {
     idClienteNuevo: String
   },
@@ -176,10 +197,21 @@ export default {
       municipio: "",
       estado: "",
       cp: "",
-      adicional: ""
+      adicional: "",
+      address: '',
+      googleAddress: true
     };
   },
   methods: {
+    getAddressData: function (addressData, placeResultData, id) {
+        this.address = addressData;
+        this.calle = this.address.route
+        this.numero = this.address.street_number
+        this.municipio = this.address.locality
+        this.estado = this.address.administrative_area_level_1
+        this.cp = this.address.postal_code
+        this.googleAddress = false;
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
@@ -195,7 +227,8 @@ export default {
       this.$emit("nextStep", this.next);
       this.$emit("reRenderDataTable");
 
-      axios
+
+        axios
         .post('http://localhost:3000/clients/' + this.idClienteNuevo + '/add-contact', {
           _client: this.idClienteNuevo,
           title: this.titulo,
@@ -215,13 +248,15 @@ export default {
         .then(res => {
         })
         .catch(err => {});
-
-    }
+      }
   },
   computed: {
   isComplete () {
     return this.titulo && this.email && this.telefono && this.movil && this.calle && this.numero && this.colonia && this.municipio && this.estado && this.cp;
   }
+},
+mounted(){
+  this.$refs.address.focus();
 }
 };
 </script>
@@ -229,6 +264,19 @@ export default {
 <style scoped>
 button {
   border-radius: 16px;
+}
+
+.form-control{
+  width: 100%;
+  padding: 14px 16px 2px 2px;
+  border-bottom: 2px solid  lightgray;
+  text-transform: lowercase;
+  margin: 8px 0 16px 0;
+}
+
+.form-control:focus{
+  outline: none;
+  border-bottom: 2px solid  #5C6BC0;
 }
 </style>
 

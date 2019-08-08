@@ -28,7 +28,7 @@
             <v-icon color="red lighten-1">delete</v-icon>
             </a></v-btn>
             <v-btn fab flat small>
-              <a :href="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`">
+              <a :href="`https://syf-archivos-usuarios.s3.us-east-2.amazonaws.com/${file.Key}`" target="_blank">
                 <v-icon color="blue-grey lighten-1">cloud_download</v-icon>
             </a></v-btn>
         </v-card-actions>

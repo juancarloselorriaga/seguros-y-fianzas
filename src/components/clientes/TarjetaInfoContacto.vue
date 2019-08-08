@@ -143,6 +143,29 @@
                 clearable
                     >
               </v-text-field>
+
+                <v-text-field
+                v-model="contact.contactId.address.number"
+                label="número"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+
+
+                <v-text-field
+                v-model="contact.contactId.address.neighborhood"
+                label="colonia"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
               </v-layout>
               <v-layout column v-else>
                 <span class="subheading blue-grey--text text--lighten-1 my-1">Dirección</span>

@@ -7,7 +7,7 @@
             <v-form ref="form" v-model="valid" lazy-validation class="pa-0">
               <h2 class="heading blue-grey--text text--darken-4 mb-3">Personal</h2>
               <v-text-field
-                outline
+                
                 ref="name"
                 v-model="nombre"
                 color="indigo lighten-1"
@@ -17,7 +17,7 @@
               ></v-text-field>
 
               <v-select
-              outline
+              
                 color="indigo lighten-1"
                 v-model="selectEstadoCivil"
                 :items="itemsEstadoCivil"
@@ -27,7 +27,7 @@
               ></v-select>
 
               <v-select
-              outline
+              
                 color="indigo lighten-1"
                 v-model="selectGenero"
                 :items="itemsGenero"
@@ -49,10 +49,9 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                  outline
                     v-model="date"
-                    label="Fecha de nacimiento"
                     readonly
+                    label="Fecha de nacimiento"
                     v-on="on"
                     color="indigo lighten-1"
                   ></v-text-field>
@@ -66,7 +65,7 @@
               </v-menu>
 
               <v-textarea
-              outline
+              
                 color="indigo lighten-1"
                 auto-grow
                 rows="1"
@@ -84,13 +83,13 @@
               <h2 class="heading blue-grey--text text--darken-4 mb-3">Adicional</h2>
 
               <v-text-field
-              outline v-model="compania" :rules="requiredRules" label="Compañía" required color="indigo lighten-1"></v-text-field>
+               v-model="compania" :rules="requiredRules" label="Compañía" required color="indigo lighten-1"></v-text-field>
 
               <v-text-field
-              outline v-model="ocupacion" :rules="requiredRules" label="Ocupación" required color="indigo lighten-1"></v-text-field>
+               v-model="ocupacion" :rules="requiredRules" label="Ocupación" required color="indigo lighten-1"></v-text-field>
 
               <v-text-field
-              outline
+              
                 v-model="rfc"
                 :counter="13"
                 :rules="rfcRules"
@@ -100,7 +99,7 @@
               ></v-text-field>
 
               <v-text-field
-              outline
+              
                 v-model="curp"
                 :counter="18"
                 :rules="curpRules"
@@ -110,7 +109,7 @@
               ></v-text-field>
 
               <v-text-field
-              outline v-model="referencia" :rules="requiredRules" label="Referencia" required color="indigo lighten-1"></v-text-field>
+               v-model="referencia" :rules="requiredRules" label="Referencia" required color="indigo lighten-1"></v-text-field>
             </v-form>
           </v-layout>
         </v-flex>
