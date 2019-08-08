@@ -250,7 +250,7 @@ export default {
   }
 },
 mounted(){
-  this.$refs.address.clear();
+  this.$refs.address.focus();
 }
 };
 </script>

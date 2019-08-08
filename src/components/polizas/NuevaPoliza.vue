@@ -242,7 +242,28 @@
                       <h2 class="heading blue-grey--text text--darken-4">Dirección</h2>
                       <v-subheader class="pl-0 indigo--text text--lighten-1">Dirección</v-subheader>
                       <v-layout>
+                        <v-switch
+                          v-model="googleAddress"
+                          label="Direcciones de Google"
+                          color="indigo lighten-1"
+                        ></v-switch>
+                      </v-layout>
+                      <v-layout>
+                        <v-flex xs12>
+                          <vue-google-autocomplete
+                            ref="address"
+                            id="map"
+                            class="form-control subheading"
+                            placeholder="Favor de ingresar una dirección"
+                            v-on:placechanged="getAddressData"
+                            country="mx"
+                            v-if="googleAddress"
+                          ></vue-google-autocomplete>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout>
                         <v-text-field
+                          v-if="!googleAddress"
                           ref="address"
                           color="indigo lighten-1"
                           v-model="calle"
@@ -252,6 +273,7 @@
                           class="mr-4"
                         ></v-text-field>
                         <v-text-field
+                          v-if="!googleAddress"
                           ref="address"
                           color="indigo lighten-1"
                           v-model="numero"
@@ -263,6 +285,7 @@
                       </v-layout>
 
                       <v-text-field
+                        v-if="!googleAddress"
                         ref="address"
                         v-model="colonia"
                         :rules="requiredRules"
@@ -271,9 +294,10 @@
                         color="indigo lighten-1"
                       ></v-text-field>
 
-                      <v-subheader class="pl-0 indigo--text text--lighten-1">Localidad</v-subheader>
+                      <v-subheader v-if="!googleAddress" class="pl-0 indigo--text text--lighten-1">Localidad</v-subheader>
 
                       <v-text-field
+                        v-if="!googleAddress"
                         color="indigo lighten-1"
                         ref="city"
                         v-model="municipio"
@@ -282,10 +306,11 @@
                         required
                       ></v-text-field>
 
-                      <v-subheader class="pl-0 indigo--text text--lighten-1">Estado y CP</v-subheader>
+                      <v-subheader v-if="!googleAddress" class="pl-0 indigo--text text--lighten-1">Estado y CP</v-subheader>
 
                       <v-layout>
                         <v-text-field
+                          v-if="!googleAddress"
                           ref="state"
                           color="indigo lighten-1"
                           v-model="estado"
@@ -295,6 +320,7 @@
                           class="mr-4"
                         ></v-text-field>
                         <v-text-field
+                          v-if="!googleAddress"
                           ref="zip"
                           v-model="cp"
                           :rules="requiredRules"
@@ -353,6 +379,9 @@ export default {
   props: {
     idClienteNuevo: String
   },
+  components: {
+    VueGoogleAutocomplete
+  },
   data() {
     return {
       dialog: false,
@@ -396,10 +425,20 @@ export default {
       buyer: null,
       insured: null,
       address: '',
-      googleAddress: true
+      googleAddress: false
     };
   },
   methods: {
+    getAddressData: function (addressData, placeResultData, id) {
+        this.address = addressData;
+        this.calle = this.address.route
+        this.numero = this.address.street_number
+        this.municipio = this.address.locality
+        this.estado = this.address.administrative_area_level_1
+        this.cp = this.address.postal_code
+        this.googleAddress = false;
+    },
+        
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
@@ -509,7 +548,10 @@ export default {
         this.numPoliza
       );
     }
-  }
+  },
+  mounted(){
+  this.$refs.address.focus();
+}
 };
 </script>
 

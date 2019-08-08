@@ -151,6 +151,8 @@
 
     <v-layout>
       <v-spacer></v-spacer>
+      
+      <v-btn @click="saltarPaso" flat class="mt-5 blue-grey--text">Saltar <v-icon  right small>chevron_right</v-icon></v-btn>
       <v-btn
         color="indigo lighten-1"
         :disabled='!isComplete'
@@ -158,7 +160,6 @@
         @click="saveClientContact"
         class="mt-5"
       >Guardar y continuar</v-btn>
-      <v-btn @click="saltarPaso" flat class="mt-5 blue-grey--text">Saltar <v-icon  right small>chevron_right</v-icon></v-btn>
     </v-layout>
   </div>
 </template>
@@ -199,7 +200,7 @@ export default {
       cp: "",
       adicional: "",
       address: '',
-      googleAddress: true
+      googleAddress: false
     };
   },
   methods: {
