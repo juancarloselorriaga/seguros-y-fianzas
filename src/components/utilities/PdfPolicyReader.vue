@@ -97,17 +97,27 @@ export default {
 
           let extractedPolicyInfo = {
             numeroDePoliza: this.getStaticLengthInfo(info, 'PÓLIZA/ENDOSO', 13),
-            fechaEmision: this.getStaticLengthInfo(info, 'FECHA DE EMISIÓN', 10),
-            fechaExpiracion: this.getStaticLengthInfo(info, 'HASTA LAS 12:00 HRS. DEL:', 11),
             direccion: this.getDynamicLengthInfo(info, 'DIRECCIÓN:', 'CÓDIGO POSTAL'),
             compania: 'MAPFRE',
             ramo: 'Automóviles',
             moneda: this.getDynamicLengthInfo(info, 'MONEDA:', 'GASTOS DE EXPEDICIÓN'),
-            plan: `${this.getDynamicLengthInfo(info, 'DESCRIPCIÓN:', 'REMOLQUE')} - ${this.getDynamicLengthInfo(info, 'CLAVE MAPFRE:', 'CLASE')}`,
+            plan: `${this.getDynamicLengthInfo(info, 'DESCRIPCIÓN:', 'REMOLQUE')}`,
+            clavePlan: `${this.getDynamicLengthInfo(info, 'CLAVE MAPFRE:', 'CLASE')}`,
             primaNeta: this.getDynamicLengthInfo(info, 'PRIMA NETA:', 'MONEDA')
           }
           let prePrimaTotal = this.getStaticLengthInfo(info, 'PRIMA TOTAL:', 20).split('a');
           extractedPolicyInfo.primaTotal = prePrimaTotal[0]
+
+          let fechaEmisionStringPaso1  = this.getStaticLengthInfo(info, 'FECHA DE EMISIÓN', 10).split('/')
+          let fechaEmisionStringPaso2 = fechaEmisionStringPaso1[2].substr(2, 3)
+          let fechaEmision = fechaEmisionStringPaso1[0] + '/' + fechaEmisionStringPaso1[1] + '/' + fechaEmisionStringPaso2
+          
+          let fechaVencimientoStringPaso1  = this.getStaticLengthInfo(info, 'HASTA LAS 12:00 HRS. DEL:', 11).split('/')
+          let fechaVencimientoStringPaso2 = fechaVencimientoStringPaso1[2].substr(2, 3)
+          let fechaVencimiento = fechaVencimientoStringPaso1[0] + '/' + fechaVencimientoStringPaso1[1] + '/' + fechaVencimientoStringPaso2
+          
+          extractedPolicyInfo.fechaVencimiento = fechaVencimiento
+          extractedPolicyInfo.fechaEmision = fechaEmision
 
           this.uploadedFiles.push(res.data.file);
           this.message = "Tu archivo se ha subido correctamente";

@@ -46,23 +46,13 @@
             <v-card flat class="py-3 radius-3 elevation-3">
               <v-layout justify-center class="mt-0">
                 <v-flex xs11>
-                  <VerPolizaDireccion :editMode="editMode" :policyInfo="policyInfo"/>
-                </v-flex>
-              </v-layout>
-            </v-card>
-          </v-tab-item>
-
-          <v-tab-item value="tab-4" :transition="false" :reverse-transition="false">
-            <v-card flat class="py-3 radius-3 elevation-3">
-              <v-layout justify-center class="mt-0">
-                <v-flex xs11>
                   <VerPolizaArchivos :policyId="data.policyId._id"/>
                 </v-flex>
               </v-layout>
             </v-card>
           </v-tab-item>
 
-          <v-tab-item value="tab-5" :transition="false" :reverse-transition="false">
+          <v-tab-item value="tab-4" :transition="false" :reverse-transition="false">
             <v-card flat class="py-3 radius-3 elevation-3">
               <v-layout justify-center class="mt-0">
                 <v-flex xs11>
@@ -87,7 +77,6 @@
 import axios from "axios";
 import VerPolizaDatosGenerales from "@/components/clientes/VerPolizaDatosGenerales.vue";
 import VerPolizaPlan from "@/components/clientes/VerPolizaPlan.vue";
-import VerPolizaDireccion from "@/components/clientes/VerPolizaDireccion.vue";
 import VerPolizaClientesrelacionados from "@/components/clientes/VerPolizaClientesRelacionados.vue";
 import VerPolizaArchivos from "@/components/clientes/VerPolizaArchivos.vue";
 import Confirm from "@/components/utilities/Confirm.vue";
@@ -98,7 +87,6 @@ export default {
   components: {
     VerPolizaDatosGenerales,
     VerPolizaPlan,
-    VerPolizaDireccion,
     VerPolizaClientesrelacionados,
     VerPolizaArchivos,
     Menu,
@@ -118,9 +106,8 @@ export default {
       tabItems: [
         { titulo: "Datos generales", tabId: 1, badge: true },
         { titulo: "Plan", tabId: 2, badge: true },
-        { titulo: "Dirección", tabId: 3, badge: true },
-        { titulo: "Archivos", tabId: 4, badge: true },
-        { titulo: "Clientes relacionados", tabId: 5, badge: true }
+        { titulo: "Archivos", tabId: 3, badge: true },
+        { titulo: "Clientes relacionados", tabId: 4, badge: true }
       ],
       policyOptions: [
       { title: "Eliminar póliza", icon: "delete", url: `http://localhost:3000/policies/${this.data.policyId._id}`},

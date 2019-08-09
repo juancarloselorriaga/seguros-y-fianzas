@@ -266,70 +266,15 @@
                           v-if="!googleAddress"
                           ref="address"
                           color="indigo lighten-1"
-                          v-model="calle"
+                          v-model="address"
                           :rules="requiredRules"
-                          label="calle"
+                          label="dirección"
                           required
                           class="mr-4"
                         ></v-text-field>
-                        <v-text-field
-                          v-if="!googleAddress"
-                          ref="address"
-                          color="indigo lighten-1"
-                          v-model="numero"
-                          :rules="requiredRules"
-                          label="número"
-                          required
-                          class="ml-4"
-                        ></v-text-field>
                       </v-layout>
 
-                      <v-text-field
-                        v-if="!googleAddress"
-                        ref="address"
-                        v-model="colonia"
-                        :rules="requiredRules"
-                        label="colonia"
-                        required
-                        color="indigo lighten-1"
-                      ></v-text-field>
-
-                      <v-subheader v-if="!googleAddress" class="pl-0 indigo--text text--lighten-1">Localidad</v-subheader>
-
-                      <v-text-field
-                        v-if="!googleAddress"
-                        color="indigo lighten-1"
-                        ref="city"
-                        v-model="municipio"
-                        :rules="requiredRules"
-                        label="municipio"
-                        required
-                      ></v-text-field>
-
-                      <v-subheader v-if="!googleAddress" class="pl-0 indigo--text text--lighten-1">Estado y CP</v-subheader>
-
-                      <v-layout>
-                        <v-text-field
-                          v-if="!googleAddress"
-                          ref="state"
-                          color="indigo lighten-1"
-                          v-model="estado"
-                          :rules="requiredRules"
-                          label="estado"
-                          required
-                          class="mr-4"
-                        ></v-text-field>
-                        <v-text-field
-                          v-if="!googleAddress"
-                          ref="zip"
-                          v-model="cp"
-                          :rules="requiredRules"
-                          label="cp"
-                          required
-                          class="ml-4"
-                          color="indigo lighten-1"
-                        ></v-text-field>
-                      </v-layout>
+                      <v-subheader v-if="!googleAddress" class="pl-0 indigo--text text--lighten-1">Comentarios</v-subheader>
 
                       <v-textarea
                         color="indigo lighten-1"
@@ -410,12 +355,6 @@ export default {
       cobertura: "",
       primaTotal: "",
       primaNeta: "",
-      calle: "",
-      numero: "",
-      colonia: "",
-      municipio: "",
-      estado: "",
-      cp: "",
       comentarios: "",
       selectTipoPago: null,
       tipoPagoItems: ["Mensual", "Trimestral", "Semestral", "Anual"],
@@ -430,13 +369,11 @@ export default {
   },
   methods: {
     getAddressData: function (addressData, placeResultData, id) {
-        this.address = addressData;
-        this.calle = this.address.route
-        this.numero = this.address.street_number
-        this.municipio = this.address.locality
-        this.estado = this.address.administrative_area_level_1
-        this.cp = this.address.postal_code
+      if(addressData.street_number === undefined){
         this.googleAddress = false;
+        return this.address = `${addressData.route}, ${addressData.locality}, ${addressData.administrative_area_level_1}. CP ${addressData.postal_code}`;
+      }
+        return this.address = `${addressData.route}, ${addressData.street_number}, ${addressData.locality}, ${addressData.administrative_area_level_1}. CP ${addressData.postal_code}`;
     },
         
     validate() {
@@ -472,15 +409,8 @@ export default {
             _buyer: this.buyer,
             _insured: this.insured,
             _policyNumber: this.numPoliza,
-            address: {
-              street: this.calle,
-              number: this.numero,
-              neighborhood: this.colonia,
-              municipality: this.municipio,
-              state: this.estado,
-              cp: this.cp,
-              additionalInfo: this.comentarios
-            },
+            additionalInfo: this.comentarios,
+            address: this.address,
             company: this.compania,
             class: {
               title: this.ramoTitulo,
@@ -538,12 +468,7 @@ export default {
         this.cobertura &&
         this.primaTotal &&
         this.primaNeta &&
-        this.calle &&
-        this.numero &&
-        this.colonia &&
-        this.municipio &&
-        this.estado &&
-        this.cp &&
+        this.address &&
         this.selectTipoPago &&
         this.numPoliza
       );

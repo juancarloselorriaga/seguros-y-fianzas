@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="920">
+  <v-dialog v-model="dialog" persistent width="920">
     <template v-slot:activator="{ on }">
       <v-btn small fab dark color="indigo lighten-1" class="elevation-0" v-on="on"><v-icon dark>add</v-icon></v-btn>
     </template>
@@ -8,7 +8,7 @@
       <v-card-text class="my-0">
         <v-layout>
         <v-flex xs12>
-          <CargarPoliza :clientId="clientId" @closeModal="closeModal"/>
+          <CargarPoliza :clientId="clientId" @cancelar="cancelar" @reRenderCard="reRenderCard"/>
         </v-flex>
         </v-layout>
       </v-card-text>
@@ -36,10 +36,10 @@ export default {
     }
   },
   methods: {
-    closeModal () {
+    cancelar () {
       this.dialog = false;
     },
-    reRender() {
+    reRenderCard() {
       this.$emit("reRenderCard");
     }
   }

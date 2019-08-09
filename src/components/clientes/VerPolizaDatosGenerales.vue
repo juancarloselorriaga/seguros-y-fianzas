@@ -118,82 +118,46 @@
 
         <v-flex xs4 class="mb-3">
             <v-layout v-if="editModeStatus" wrap>
-              <v-menu
-                        color="indigo lighten-1"
-                        v-model="menu"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        min-width="290px"
-                      >
-                        <template v-slot:activator="{ on }">
-                          <v-text-field
-                            v-model="policyInfo.issuanceDate"
-                            label="Fecha de emisión"
-                            readonly
-                            v-on="on"
-                            color="indigo lighten-1"
-                            class="mx-3"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="policyInfo.issuanceDate"
-                          @input="menu = false"
-                          locale="es-419"
-                          color="indigo lighten-1"
-                        ></v-date-picker>
-                      </v-menu>
+              <v-text-field
+                v-model="policyInfo.issuanceDate"
+                label="clave del ramo"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="mx-3"
+                clearable
+              ></v-text-field>
             </v-layout>
             <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Fecha de emisión</span>
               <span
                 class="body-1 blue-grey--text text--darken-4"
                 v-if="policyInfo !== null"
-              >{{moment(new Date(policyInfo.issuanceDate).toISOString().substr(0, 10)).format('ll')}}</span>
+              >{{policyInfo.issuanceDate}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
         </v-flex>
 
         <v-flex xs4 class="mb-3">
             <v-layout v-if="editModeStatus" wrap>
-              <v-menu
-                        color="indigo lighten-1"
-                        v-model="menuExp"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        lazy
-                        transition="scale-transition"
-                        offset-y
-                        full-width
-                        min-width="290px"
-                      >
-                        <template v-slot:activator="{ on }">
-                          <v-text-field
-                            v-model="policyInfo.expirationDate"
-                            label="Fecha de emisión"
-                            readonly
-                            v-on="on"
-                            color="indigo lighten-1"
-                            class="mx-3"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="policyInfo.expirationDate"
-                          @input="menuExp = false"
-                          locale="es-419"
-                          color="indigo lighten-1"
-                        ></v-date-picker>
-                      </v-menu>
+              <v-layout v-if="editModeStatus" wrap>
+              <v-text-field
+                v-model="policyInfo.expirationDate"
+                label="clave del ramo"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="mx-3"
+                clearable
+              ></v-text-field>
+            </v-layout>
             </v-layout>
             <v-layout column v-else>
               <span class="subheading blue-grey--text text--lighten-1 my-1">Fecha de vencimiento</span>
               <span
                 class="body-1 blue-grey--text text--darken-4 text-capitalize"
                 v-if="policyInfo !== null"
-              >{{moment(new Date(policyInfo.expirationDate).toISOString().substr(0, 10)).format('ll')}}</span>
+              >{{policyInfo.expirationDate}}</span>
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
         </v-flex>
@@ -281,7 +245,50 @@
               <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
             </v-layout>
         </v-flex>
+
+        <v-flex xs12 class="mb-3">
+          <v-layout v-if="editModeStatus" wrap>
+            <v-text-field
+              v-model="policyInfo.address"
+              label="calle"
+              hint="Para guardar, cierra el modo edición."
+              required
+              color="indigo lighten-1"
+              class="mx-3"
+              clearable
+            ></v-text-field>
+          </v-layout>
+          <v-layout column v-else>
+            <span class="subheading blue-grey--text text--lighten-1 my-1">Direccion</span>
+            <span
+              class="body-1 blue-grey--text text--darken-4 text-capitalize"
+              v-if="policyInfo !== null"
+            >{{policyInfo.address}}</span>
+            <span class="body-1 blue-grey--text text--darken-4" v-else>sin información</span>
+          </v-layout>
+        </v-flex>
         
+                <v-flex xs12 class="mb-3">
+              <v-layout column v-if="editModeStatus">
+                <v-text-field
+                v-model="policyInfo.additionalInfo"
+                label="información adicional"
+                hint="Para guardar, cierra el modo edición."
+                required
+                color="indigo lighten-1"
+                class="ma-3"
+                clearable
+                    >
+              </v-text-field>
+              </v-layout>
+              <v-layout column v-else>
+                <span class="subheading blue-grey--text text--lighten-1 my-1">Información adicional</span>
+                <span
+                  class="body-1 blue-grey--text text--darken-4"
+                >{{policyInfo.additionalInfo}}</span>
+              </v-layout>
+            </v-flex>
+
 
       </v-layout>
 
@@ -333,7 +340,9 @@ export default {
           paymentType: this.policyInfo.paymentType,
           currency: this.policyInfo.currency,
           paymentMethod: this.policyInfo.paymentMethod,
-          paymentStatus: this.policyInfo.paymentStatus
+          paymentStatus: this.policyInfo.paymentStatus,
+          additionalInfo: this.policyInfo.additionalInfo,
+          address: this.policyInfo.address
         })
         .then(res => {
           this.editModeStatus = false;

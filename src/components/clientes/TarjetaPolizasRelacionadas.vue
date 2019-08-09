@@ -5,7 +5,7 @@
         <h2 class="title font-weight-regular blue-grey--text text--darken-2">Pólizas relacionada</h2>
       </v-flex>
       <v-flex xs2 class="text-xs-right">
-        <ModalCargarPoliza :clientId="clientId"/>
+        <ModalCargarPoliza :clientId="clientId" @reRenderCard="reRenderCard"/>
       </v-flex>
     
   </v-layout>
@@ -81,6 +81,9 @@ export default {
     },
     reRenderDataTable () {
       this.$emit('reRenderDataTable')
+    },
+    reRenderCard () {
+      this.$emit('reRenderCard')
     }
   },
   mounted () {
