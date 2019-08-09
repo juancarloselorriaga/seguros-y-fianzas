@@ -1,8 +1,13 @@
 <template>
   <div v-if="polizas !== undefined" class="mb-3" :key="reRenderKey" :checker="checker">
     <v-layout align-center justify-space-between class="pr-3 mb-3">
-    <h2 class="title font-weight-regular blue-grey--text text--darken-2">Pólizas relacionada</h2>
-    <v-btn small fab dark color="indigo lighten-1" class="elevation-0"><v-icon dark>add</v-icon></v-btn>
+      <v-flex xs-10>
+        <h2 class="title font-weight-regular blue-grey--text text--darken-2">Pólizas relacionada</h2>
+      </v-flex>
+      <v-flex xs2 class="text-xs-right">
+        <ModalCargarPoliza :clientId="clientId"/>
+      </v-flex>
+    
   </v-layout>
     <v-list subheader>
 
@@ -31,12 +36,14 @@
 <script>
 
 import ModalVerPoliza from "@/components/clientes/ModalVerPoliza.vue";
+import ModalCargarPoliza from "@/components/polizas/ModalCargarPoliza.vue";
 import axios from "axios";
 
 export default {
   name: "TarjetaPolizasRelacionadas",
   components: {
-    ModalVerPoliza
+    ModalVerPoliza,
+    ModalCargarPoliza
   },
   props: {
     clientId: String

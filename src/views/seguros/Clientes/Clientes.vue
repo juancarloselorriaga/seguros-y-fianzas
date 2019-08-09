@@ -10,7 +10,7 @@
             </v-avatar>
           </v-layout>
           <v-spacer></v-spacer>
-          <v-layout justify-end>
+          <v-layout justify-end align-center>
             <ModalNuevoCliente @reRenderCard="reRenderCard" @reRender="reRender" @terminar="terminar" />
             <v-btn flat color="indigo lighten-1" @click="reRender">Actualzar
               <v-icon right>refresh</v-icon>
@@ -56,7 +56,7 @@ export default {
   components: {
     Cliente,
     ListadoClientes,
-    ModalNuevoCliente
+    ModalNuevoCliente,
   },
   data() {
     return {
