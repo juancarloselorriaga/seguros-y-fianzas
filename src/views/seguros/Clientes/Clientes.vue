@@ -84,7 +84,7 @@ export default {
       });
     },
     selectRow(row) {
-      const url = "http://localhost:3000/clients/" + row._id;
+      const url = `${process.env.VUE_APP_HOST}/clients/${row._id}`;
       axios
         .get(url)
         .then(res => {

@@ -110,14 +110,14 @@ export default {
         { titulo: "Clientes relacionados", tabId: 4, badge: true }
       ],
       policyOptions: [
-      { title: "Eliminar póliza", icon: "delete", url: `http://localhost:3000/policies/${this.data.policyId._id}`},
+      { title: "Eliminar póliza", icon: "delete", url: `${process.env.VUE_APP_HOST}/policies/${this.data.policyId._id}`},
     ],
       policyInfo: null
     };
   },
   methods: {
     getPolicy(clientId, index) {
-      const url = "http://localhost:3000/clients/" + this.clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${this.clientId}`;
       axios
         .get(url)
         .then(res => {
@@ -149,7 +149,7 @@ export default {
       }
     },
     getClient() {
-      const url = "http://localhost:3000/clients/" + this.clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${this.clientId}`;
       axios
         .get(url)
         .then(res => {

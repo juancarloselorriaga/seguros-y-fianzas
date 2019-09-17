@@ -311,7 +311,7 @@ export default {
     saveEditStatus(updatedCard, index) {
       let cardId = updatedCard.contactId._id
       axios
-        .put('http://localhost:3000/contact-info/' + cardId, {
+        .put(`${process.env.VUE_APP_HOST}/contact-info/${cardId}`, {
           title: updatedCard.contactId.title,
           email: updatedCard.contactId.email,
           phone: updatedCard.contactId.phone,
@@ -345,7 +345,7 @@ export default {
     async deleteCard(cardId) {
        if (await this.$refs.confirm.open('Borrar tarjeta de contacto', '¿Estás seguro de querer borrar ésta tarjeta de contacto? Esta acción es irreversible', { color: 'red' })) {
       axios
-          .delete('http://localhost:3000/contact-info/' + cardId, {})
+          .delete(`${process.env.VUE_APP_HOST}/contact-info/${cardId}`, {})
           .then(res => {
             this.$emit("reRenderCard");
           })

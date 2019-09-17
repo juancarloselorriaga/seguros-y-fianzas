@@ -87,7 +87,7 @@ export default {
         this.message = "";
       
         this.loading = true;
-        const url = `http://localhost:3000/policies/read-pdf`;
+        const url = `${process.env.VUE_APP_HOST}/policies/read-pdf`;
         const formData = new FormData();
         formData.append("file", this.file);
 

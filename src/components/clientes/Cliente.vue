@@ -101,7 +101,7 @@ export default {
         {
           title: "Eliminar cliente",
           icon: "delete",
-          url: `http://localhost:3000/clients/${this.items._id}`
+          url: `${process.env.VUE_APP_HOST}/clients/${this.items._id}`
         }
       ]
     };

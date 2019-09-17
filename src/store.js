@@ -16,8 +16,7 @@ export default new Vuex.Store({
   actions: {
     async getClients({ commit }){
       let clients = []
-      const url = 'http://localhost:3000/clients';
-
+      const url =  `${process.env.VUE_APP_HOST}/clients`;
       axios.get(url)
         .then((res) => {
           clients = res.data.data;

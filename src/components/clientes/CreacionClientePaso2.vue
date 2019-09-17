@@ -230,7 +230,7 @@ export default {
 
 
         axios
-        .post('http://localhost:3000/clients/' + this.idClienteNuevo + '/add-contact', {
+        .post(`${process.env.VUE_APP_HOST}/clients/${this.idClienteNuevo}/add-contact`, {
           _client: this.idClienteNuevo,
           title: this.titulo,
           email: this.email,

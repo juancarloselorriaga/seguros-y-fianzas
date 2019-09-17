@@ -425,7 +425,7 @@ export default {
     },
     saveDiseases() {
       axios
-        .put("http://localhost:3000/clients/" + this.clientId, {
+        .put(`${process.env.VUE_APP_HOST}/clients/${this.clientId}`, {
           medicalInfo: this.medical
         })
         .then(res => {
@@ -439,7 +439,7 @@ export default {
     },
     saveGeneral() {
       axios
-        .put("http://localhost:3000/clients/" + this.clientId, {
+        .put(`${process.env.VUE_APP_HOST}/clients/${this.clientId}`, {
           personalInfo: this.general.personalInfo,
           professionalInfo: this.general.professionalInfo,
           legalInfo: this.general.legalInfo,
@@ -459,7 +459,7 @@ export default {
       this.medical.isSmoker = !this.medical.isSmoker
 
       axios
-        .put("http://localhost:3000/clients/" + this.clientId, {
+        .put(`${process.env.VUE_APP_HOST}/clients/${this.clientId}`, {
           medicalInfo: this.medical
         })
         .then(res => {
@@ -472,7 +472,7 @@ export default {
         });
     },
     getMedical(clientId) {
-      const url = "http://localhost:3000/clients/" + clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${clientId}`;
       axios
         .get(url)
         .then(res => {
@@ -483,7 +483,7 @@ export default {
         });
     },
     getGeneral(clientId) {
-      const url = "http://localhost:3000/clients/" + this.clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${this.clientId}`;
       axios
         .get(url)
         .then(res => {

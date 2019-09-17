@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     uploadFile() {
-      const url = `http://localhost:3000/policies/${this.policyId}/add-file`;
+      const url = `${process.env.VUE_APP_HOST}/policies/${this.policyId}/add-file`;
       const data = {
         title: this.title,
         description: this.description,

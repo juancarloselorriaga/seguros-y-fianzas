@@ -221,7 +221,7 @@ export default {
       this.validate();
 
       axios
-        .put("http://localhost:3000/clients/" + this.clientId, {
+        .put(`${process.env.VUE_APP_HOST}/clients/${this.clientId}`, {
           personalInfo: {
             name: this.nombre,
             birthdate: this.date,
@@ -251,7 +251,7 @@ export default {
         });
     },
     getClientData () {
-      const url = 'http://localhost:3000/clients/' + this.clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${this.clientId}`;
 
       axios.get(url)
         .then((res) => {

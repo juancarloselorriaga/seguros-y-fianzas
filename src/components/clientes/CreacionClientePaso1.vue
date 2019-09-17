@@ -189,7 +189,7 @@ export default {
       this.$emit("reRenderDataTable");
 
       axios
-        .post("http://localhost:3000/clients/add-client", {
+        .post(`${process.env.VUE_APP_HOST}/clients/add-client`, {
           personalInfo: {
             name: this.nombre,
             birthdate: this.date,

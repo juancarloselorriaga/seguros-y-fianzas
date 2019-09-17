@@ -402,9 +402,7 @@ export default {
 
       axios
         .post(
-          "http://localhost:3000/clients/" +
-            this.idClienteNuevo +
-            "/add-policy",
+          `${process.env.VUE_APP_HOST}/clients/${this.idClienteNuevo}/add-policy`,
           {
             _buyer: this.buyer,
             _insured: this.insured,

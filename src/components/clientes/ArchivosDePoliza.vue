@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async getFiles() {
-      const url = `http://localhost:3000/policies/${this.policyId}/get-files`;
+      const url = `${process.env.VUE_APP_HOST}/policies/${this.policyId}/get-files`;
       try {
         const res = await axios.get(url);
         this.files = res.data.policyFiles;
@@ -65,7 +65,7 @@ export default {
     },
     async deleteItem(index){
       let fileKey = {Key: this.files[index].Key};
-      const url = `http://localhost:3000/policies/${this.policyId}/delete-file`;
+      const url = `${process.env.VUE_APP_HOST}/policies/${this.policyId}/delete-file`;
 
       try {
           const res = await axios.post(url, fileKey)

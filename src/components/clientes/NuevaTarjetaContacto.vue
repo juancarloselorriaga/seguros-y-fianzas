@@ -218,7 +218,7 @@ export default {
       this.$emit('closeModal')
 
       axios
-        .post('http://localhost:3000/clients/' + this.idCliente + '/add-contact', {
+        .post(`${process.env.VUE_APP_HOST}/clients/${this.idCliente}/add-contact`, {
           _client: this.idCliente,
           title: this.titulo,
           email: this.email,

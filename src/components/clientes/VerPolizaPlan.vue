@@ -234,7 +234,7 @@ export default {
     },
     saveGeneral () {
       axios
-      .put("http://localhost:3000/policies/" + this.policyInfo._id, {
+      .put(`${process.env.VUE_APP_VUE_APP_HOST}/policies/${this.policyInfo._id}`, {
           plan: this.policyInfo.plan,
           hasExtraPremium: this.policyInfo.hasExtraPremium,
           extraPremiumCause: this.policyInfo.extraPremiumCause

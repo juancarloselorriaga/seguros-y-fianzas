@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     getBuyer(buyerId) {
-      const url = "http://localhost:3000/clients/" + buyerId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${buyerId}`;
       axios
         .get(url)
         .then(res => {
@@ -91,7 +91,7 @@ export default {
         });
     },
     getInsured(buyerId) {
-      const url = "http://localhost:3000/clients/" + buyerId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${buyerId}`;
       axios
         .get(url)
         .then(res => {

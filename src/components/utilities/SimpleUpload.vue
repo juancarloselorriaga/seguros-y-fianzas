@@ -103,7 +103,7 @@ export default {
         this.message = "";
       
         this.loading = true;
-        const url = `http://localhost:3000/policies/${this.policyId}/save-file`;
+        const url = `${process.env.VUE_APP_HOST}/policies/${this.policyId}/save-file`;
         const formData = new FormData();
         formData.append("file", this.file);
 

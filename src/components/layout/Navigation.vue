@@ -59,40 +59,39 @@ export default {
     mini: true,
     right: null,
     items: [
-      { icon: "dashboard", text: "Inicio", link: "/" },
-      { heading: "Agenda", edit: false },
-      {
-        icon: "assignment_turned_in",
-        text: "Pendientes",
-        link: "/pendientes"
-      },
-      { icon: "calendar_today", text: "Citas", link: "/citas" },
-      { icon: "phone", text: "Llamadas", link: "/llamadas" },
-      { icon: "compare_arrows", text: "Trámites", link: "/tramites" },
-      { divider: true },
-      { heading: "Seguros", edit: false },
+      // { icon: "dashboard", text: "Inicio", link: "/" },
+      // { heading: "Agenda", edit: false },
+      // {
+      //   icon: "assignment_turned_in",
+      //   text: "Pendientes",
+      //   link: "/pendientes"
+      // },
+      // { icon: "calendar_today", text: "Citas", link: "/citas" },
+      // { icon: "phone", text: "Llamadas", link: "/llamadas" },
+      // { icon: "compare_arrows", text: "Trámites", link: "/tramites" },
+      // { divider: true },
+      // { heading: "Seguros", edit: false },
       { icon: "people", text: "Clientes", link: "/clientes" },
-      { icon: "archive", text: "Pólizas", link: "/polizas" },
-      { icon: "payment", text: "Pólizas por pagar", link: "/pagos" },
-      {
-        icon: "update",
-        text: "Pólizas por renovar",
-        link: "/renovaciones"
-      },
-      { divider: true },
-      {
-        icon: "settings",
-        text: "Configuración",
-        link: "/configuracion"
-      },
+    //   { icon: "archive", text: "Pólizas", link: "/polizas" },
+    //   { icon: "payment", text: "Pólizas por pagar", link: "/pagos" },
+    //   {
+    //     icon: "update",
+    //     text: "Pólizas por renovar",
+    //     link: "/renovaciones"
+    //   },
+    //   { divider: true },
+    //   {
+    //     icon: "settings",
+    //     text: "Configuración",
+    //     link: "/configuracion"
+    //   },
       { icon: "help", text: "Ayuda", link: "/ayuda" }
     ],
     profileOptions: [
       { title: "Configurar cuenta", icon: "settings" },
       { title: "Salir", icon: "exit_to_app" }
     ]
-  })
-};
+})}
 </script>
 
 <style scoped>

@@ -69,7 +69,7 @@ export default {
       this.getPolicies()
     },
     getPolicies() {
-      const url = "http://localhost:3000/clients/" + this.clientId;
+      const url = `${process.env.VUE_APP_HOST}/clients/${this.clientId}`;
       axios
         .get(url)
         .then(res => {

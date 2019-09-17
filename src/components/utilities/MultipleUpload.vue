@@ -98,7 +98,7 @@ export default {
       return '';
     },
     async sendFile() {
-      const url = `http://localhost:3000/policies/${this.policyId}/add-files`;
+      const url = `${process.env.VUE_APP_HOST}/policies/${this.policyId}/add-files`;
       const formData = new FormData();
 
       _.forEach(this.uploadFiles, file => {
